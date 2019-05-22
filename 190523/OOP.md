@@ -64,6 +64,27 @@
 
 
 
+클래스 ----->(인스턴스화)---> 인스턴스(객체)
+
+
+
+## III 객체의 구성요소
+
+- 속성 (property): 멤버변수 (member variable), 특성(attribute), 필드(field), 상태(status)
+- 기능(function) :메서드 (method), 함수 (function), 행위(behavior)
+
+
+
+## IV 인스턴스의 생성과 사용
+
+``` java
+클래스명 변수명;			// 클래스의 객체를 참조하기 위한 참조변수를 선언
+변수명 = new 클래스명();	// 클래스의 객체를 생성 후, 객체의 주소를 참조변수에 저장
+
+TV t;					// Tv클래스 타입의 참조변수 t를 선언
+t = new Tv();			// Tv인스턴스를 생성한 후, 생성된 Tv 인스턴스의 주소를 t에저장
+```
+
 
 
 
@@ -82,8 +103,30 @@
 - Encapsulation
 
   - modifier
+
     - private  & public  
+
+    - ``` java
+      private String color;
+      private boolean power;  
+      public int channel;
+      ```
+
   - Getter & Setter 
+
+    - ``` java
+      public String getColor() { //게터  string 값이 리턴
+      		return color;  // this.  이 생략
+      	}
+      	public void setColor(String color) { // 세터 없애면 encap 을 더 강력하게 함
+      		// 숫자 못들어오게 한다 
+      		// 컬러는 몇개로 정해서 동작한다.
+      		if(color.equals("")|| color == null) {
+      			return; //함수 끝내기 
+      		}
+      		this.color = color;
+      	}
+      ```
 
 - Inheritance
 
@@ -96,6 +139,12 @@
 - Overload
 
 
+
+
+
+### StarUML
+
+- 현실 - RFP - OOAD - OOP
 
 
 
