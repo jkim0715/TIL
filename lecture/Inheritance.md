@@ -1,6 +1,7 @@
 ## Inheritance
 
-
+- Polymorphism - 의미는 같지만 형태는 다르다.;;
+  - 사용하는 이유 : 사용자는 하나의 parent 클래스(표준) 만 알면 그 밑의 자손클래스들을 이름만 알아도 자유롭게 사용가능
 
 ### StarUML
 
@@ -9,6 +10,8 @@ Gerneralization - 상위에 잇는걸 상속받는다
 - generalize 하다보니 추상 클래스가 나올 수 밖에 없었다.
 
 isAbstract -- 추상 구현
+
+- Dependency  -- parents 하나만 보고 작성
 
 
 
@@ -51,3 +54,151 @@ if(sh instanceof Circle){		// 만약 sh가 Circle 이라면
 }
 ```
 
+ #### 상속관계 (is a..)
+
+``` java
+class Circle{
+    Point c = new Point();
+}
+
+class Circle extends Point{
+    int r;
+}
+```
+
+
+
+#### 포함관계 (has a)
+
+``` java
+class Circle{
+    int x;
+    int y;
+    int r;
+}
+
+class Circle{
+    Point c = new Pount();
+    int r;
+}
+```
+
+#### 오버로딩 vs 오버라이딩
+
+- 오버로딩 (overloading) : 기존에 없는 새로운 메서드를 정의하는 것 (new)
+- 오버라이딩 (overriding) : 상속받은 메서드의 내용을 변경한느 것 (change, modify)
+
+
+
+#### Super
+
+- 자손 클래스에서 조상 클래스로부터 상속받은 멤버를 참조하는데 사용되는 참조 변수.
+
+``` java
+class SuperTest{
+    public static void main(String arg[]){
+        Child c = new Child();
+        c.method();
+    }
+}
+
+class Parent{
+    int x = 10;
+}
+
+class Child extends Parent{
+    int x =20;
+    void method(){
+        sysout(x);			// x = 20
+        sysout(this.x);		// x = 20
+        sysout(super.x);	// x = 10
+    }
+}
+```
+
+- 변수뿐만 아니라 method 역시 호출 가능.
+
+``` java
+class Point {
+    int x;
+    int y;
+    String getLocation(){
+        return "x:"+x+", y:"+y;
+    }
+}
+
+class Point3D extends Point{
+    int z;
+    String getLocation(){
+        return super.getLocation()
+    }
+}
+```
+
+### 객체지향 
+
+아래 코딩이 되는 이유는 OOP2
+
+- user 를 object로  받을 수 있다.  왜냐면 object > user 개념이기 때문에.
+
+``` java
+public Object select(Object obj){
+    User user = null;
+    
+    return user;
+}
+```
+
+
+
+#### Generics
+
+
+
+
+
+
+
+#### Collection API
+
+- Set -  중복 불가,  순서 없음
+
+``` java
+HashSet<Object> set0 = new HashSet<>();		//전체
+		HashSet<Integer> set = new HashSet<>();
+	
+		
+		Random r= new Random();
+		while(true) {
+			set.add(r.nextInt(45)+1);
+			if(set.size() == 6) {
+				break;
+			}
+		}
+System.out.println(set.toString());// 보면 중복 허용안함...순서마구잡이
+```
+
+
+
+- List  - 순서 있음, 속도 느림
+
+``` java
+ArrayList<Integer> list = new ArrayList<>();
+		
+		Random r= new Random();
+		while(true) {
+			list.add(r.nextInt(45)+1);
+			if(list.size() == 10) {				//10개를 넣겟다 
+				break;
+			}
+		}
+		System.out.println(list.toString());	
+```
+
+
+
+- HashMap < Key, Value >  
+  - 1번 박 2 번 최 3번 이 ... 저장
+    - 1번 호출하면 박이나옴
+
+Set,List,Hash - 이런애들은 사실 Shape 같이 최상위 클래스임.. 그밑에 실제로 구현을 위한 클래스들이 있음.
