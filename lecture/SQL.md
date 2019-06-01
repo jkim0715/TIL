@@ -304,7 +304,8 @@ SELECT ENAME, SAL, CASE WHEN SAL >= 5000  THEN '왕' WHEN SAL >= 3000 AND SAL <5
 
 #### JDBC (java data base connectivity)
 
-
+- 연동방법 
+  - Project - properties - java buildpath - lib - addExternal JARs - con oracke - product -11-server -JDBC -1.b-11,69
 
 
 
