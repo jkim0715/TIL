@@ -51,6 +51,8 @@
 
 - #### CREATE
 
+  - 테이블은 심플하게 생성. 제약조건 설정은 ALTER이용.
+
 ``` SQL
 CREATE TABLE T_USER(
 	ID VARCHAR2(10),    --(10)10자리까지 가능
@@ -80,6 +82,8 @@ DROP TABLE T_USER; 	//테이블 뿐만 아니라 데이터까지 싹다날림.. 
 
 
 - #### ALTER
+
+  - 제약조건 주기
 
 ``` SQL
 ALTER TABLE T_PRODUCT ADD (REGDATE DATE);-- 제약조건 변경, 컬럼 추가
@@ -153,7 +157,7 @@ SELECT * FROM EMP WHERE COMM IS NOT NULL ORDER BY COMM DESC -- NULL값 빼고정
 
 
 
-- #### INSERT(C)
+- #### INSERT(Create)
 
 ``` SQL
 INSERT INTO T_USER(ID,PWD,NAME) VALUES('','','');
@@ -222,6 +226,7 @@ TRUNCATE <테이블명>; -- 테이블의 모든 데이터를 삭제.
 #### FUNCTION 
 
 - 단일 행 함수 ( ABS, MOD, ROUND )
+  - 모든 row의 데이터를 한번씩 적용시켜주는것
 
 ``` SQL
 SELECT ENAME, ABS(SAL) FROM EMP;  -- 컬럼안의 숫자를 컨트롤 하는 함수.
@@ -294,6 +299,222 @@ SELECT ENAME, SAL, CASE WHEN SAL >= 5000  THEN '왕' WHEN SAL >= 3000 AND SAL <5
 
 
 
+### 집약 함수
+
+- 집합함수의 결과는 하나다.
+
+- COUNT
+
+  - ``` SQL
+    SELECT COUNT(*) FROM EMP;			-- 카운트 (NULL 값을 포함함)
+    SELECT COUNT(ENAME) AS CNT FROM EMP;
+    SELECT COUNT(COMM) AS CNT FROM EMP;  --NULL을 제외하고 계산 하게됨.
+    SELECT COUNT(NVL(COMM,0)) AS CNT FROM EMP; -- NULL값을 포함하고자 한다면 NVL이용
+    ```
+
+    
+
+- SUM
+
+  - ``` SQL
+    SELECT SUM(SAL) AS CNT FROM EMP;
+    SELECT SUM(SAL), SUM(DISTINCT SAL) FROM EMP; -- DISTINCT 는 중복 배제.
+    ```
+
+  - 
+
+- AVG
+
+  - ``` SQL
+    SELECT ROUND(AVG(NVL(COMM,0)),2) AS CNT FROM EMP;
+    ```
+
+  - 
+
+- MAX
+
+  - MAX/MIN 은  날짜에 사용 가능하다.
+
+- MIN
+
+  - ``` SQL
+    SELECT MIN(HIREDATE) FROM EMP; 	-- 날짜의 비교는 가능.
+    SELECT SUM(HIREDATE) FROM EMP;  -- 날짜의 계산은 불가능
+    ```
+
+  - 
+
+``` SQL
+SELECT MIN(SAL), MAX(SAL), SUM(SAL), ROUND(AVG(SAL),2) FROM EMP;  
+SELECT ENAME, SUM(SAL) AS CNT FROM EMP;  -- 이건 안됨!! 
+```
+
+- GROUP BY
+
+  - 그룹함수는, 집합함수랑 같이 사용한다.
+
+  - GROUPING 이 먼저되고 그 그룹내에서 집합함수 사용( SUM, AVG, MIN,MAX)하여 하나의 값을 도출
+
+  - 무엇을 기준으로  GROUPING을 할지가 중요할 듯.
+
+  - ``` SQL
+    SELECT JOB FROM EMP GROUP BY JOB;			--가능
+    SELECT JOB ,SAL FROM EMP GROUP BY JOB;		--불가능
+    SELECT JOB, SUM(SAL) FROM EMP GROUP BY JOB;	--가능.
+    
+    SELECT DEPTNO, JOB, FROM EMP GROUP BY DEPTNO,JOB ORDER BY DEPTNO; --GROUPING을 여러번 할 수 있다.
+    
+    SELECT DEPTNO, JOB, SUM(SAL) FROM EMP GROUP BY DEPTNO,JOB HAVING DEPTNO IN(10,20) AND JOB LIKE '%E%' ORDER BY DEPTNO;  -- WHERE 대신 HAVING 을 쓰고,, AND도 가능.
+    SELECT DEPTNO, JOB, SUM(SAL) FROM EMP GROUP BY DEPTNO,JOB HAVING DEPTNO IN(10,20) AND JOB IN ('MANAGER', 'CLERK') ORDER BY DEPTNO;  -- 라던지.
+    ```
+
+- HAVING
+
+``` SQL
+ SELECT JOB, AVG(SAL) FROM EMP WHERE DEPTNO IN (10,30) GROUP BY JOB ;  --가능
+ SELECT JOB, AVG(SAL) FROM EMP GROUP BY JOB HAVING DEPTNO IN (10,30);	--불가능
+SELECT JOB, AVG(SAL) FROM EMP GROUP BY JOB HAVING JOB IN ('MANAGER', 'CLERK'); --가능
+```
+
+- 결론 : HAVING절에는 GROUPING 된것만 들어갈 스ㅜ 있다.
+
+  - WHERE 절에는 그룹함수가 못들어간다.
+
+  - JOB 별 중에서 E 가 들어간 JOB만 조회 하시오.
+
+  - ``` SQL
+    SELECT JOB, AVG(SAL) FROM EMP GROUP BY JOB HAVING JOB LIKE '%E%';
+    ```
+
+  - JOB별 월금의 평균을 구하시오. 단, DEPTNO가 10,20인 직우너들을 대상으로 하시오
+
+  - ``` SQL 
+    SELECT JOB, AVG(SAL) FROM EMP  WHERE DEPTNO IN (10,20) GROUP BY JOB 
+    ```
+
+- EXAMPLES
+
+  - ``` SQL 
+    -- 년도별 입사자의 평균을 구하시오
+    SELECT TO_CHAR(HIREDATE,'YYYY') AS YEAR, AVG(SAL) FROM EMP GROUP BY TO_CHAR(HIREDATE,'YYYY')
+    
+    --년도별 입사 매니저의 평균을 구하시오
+    SELECT TO_CHAR(HIREDATE,'YYYY') AS YEAR, ROUND(AVG(SAL),2) FROM EMP WHERE JOB IN('MANAGER') GROUP BY TO_CHAR(HIREDATE,'YYYY')
+    ```
+
+    
+
+### VIEW
+
+- 뷰 작성 방법
+
+  - ```SQL
+    CREATE VIEW EMPSALVIEW(ENAME, ANNSAL) AS SELECT ENAME, (SAL*12)+(NVL(COMM,0)*12) FROM EMP   
+    ```
+
+- 뷰는 SELECT 문을 저장한다. 
+
+
+
+- 뷰 삭제방법
+
+  - ```SQL
+    DROP VIEW;
+    ```
+
+
+
+#### SUBQUARY
+
+-  절대적으로 TABLE과 TABLE 간에 RELATIONSHIP 이 존재해야함.
+
+- ##### SCALAR SUBQUARY 
+
+  - 반환값이 단일값일때.
+
+  - WHERE 절에 쓸때.
+
+  - ``` SQL
+    SELECT DEPTNO FROM DEPT WHERE LOC = 'DALLAS'
+    
+    SELECT ENAME FROM EMP WHERE DEPTNO = 20
+    ```
+
+    - ``` SQL
+      SELECT ENAME FROM EMP WHERE DEPTNO = (SELECT DEPTNO FROM DEPT WHERE LOC='DALLAS')
+      ```
+
+  - SAL 의 평균보다 많이 받는 사람들의 이름과 SAL을 출력하시오
+
+  - ``` SQL
+    SELECT ENAME, SAL FROM EMP WHERE SAL > (SELECT AVG(SAL) FROM EMP )
+    
+    ```
+
+  -  위 문제에서 DALLAS와 CHICAGO에 근무하는 애들을 고르시오
+
+  - ```SQL
+    SELECT ENAME, SAL FROM EMP WHERE SAL > (SELECT AVG(SAL) FROM EMP ) AND (DEPTNO IN ( SELECT DEPTNO FROM DEPT WHERE LOC IN('DALLAS','CHICAGO')))
+    
+    ```
+
+    SUBQUARY   응용.. 
+
+  - ``` SQL 
+    SELECT ENAME, SAL, AVG(SAL) FROM EMP  -- 불가능
+    SELECT ENAME, SAL , (SELECT AVG(SAL) FROM EMP ) FROM EMP ; --모든 ROW에 평균표시.
+    ```
+
+- #### 상관 SUBQUARY
+
+- 부서별 월급의 평균을 구하고자 한다. 이 중 전체 평균 보다 높은 부서만 출력한다. 단, NEW YORK 부서는 제외한다.
+
+  - ``` SQL
+    SELECT DEPTNO,AVG(SAL) FROM EMP GROUP BY DEPTNO HAVING AVG(SAL) >(SELECT AVG(SAL) FROM EMP) AND DEPTNO NOT IN (SELECT DEPTNO FROM DEPT WHERE LOC = 'NEW YORK')
+    
+    
+    ```
+
+  - 여기서 ACCOUNTING 만 뺀다
+
+  - ```SQL 
+    SELECT DEPTNO,ENAME,SAL FROM EMP E1 WHERE SAL >= (SELECT MAX(SAL) FROM EMP E2 WHERE E2.DEPTNO = E1.DEPTNO  AND E2.DEPTNO NOT IN (SELECT DEPTNO FROM DEPT WHERE DNAME = 'ACCOUNTING' )GROUP BY DEPTNO)
+    ```
+
+- SCOTT이 소속된 부서의 매니저들의 EMPNO, ENAME, DEPTNO 를 조회하시오
+
+  - ```SQL
+    SELECT EMPNO, ENAME, DEPTNO FROM EMP WHERE MGR IN (SELECT MGR FROM EMP WHERE JOB =(SELECT JOB FROM EMP WHERE ENAME = 'SCOTT'))
+    
+    SELECT MGR FROM EMP WHERE JOB =(SELECT JOB FROM EMP WHERE ENAME = 'SCOTT')
+    ```
+
+  - ``` SQL 
+    SELECT EMPNO, ENAME, DEPTNO FROM EMP E1 WHERE EMPTNO IN (SELECT MGR FROM EMP E2 WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE ENAME ='SCOTT')AND E1.EMPNO = E2.MGR)
+    ```
+
+  - ``` SQL
+    SELECT EMPNO, ENAME, DEPTNO FROM EMP WHERE EMPTNO IN (SELECT MGR FROM EMP WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE ENAME ='SCOTT'))
+    ```
+
+- #### JOIN
+
+- 두개의 테이블을 합친다.
+
+- EMP 를 조회한다.  EMPNO, ENAME, DNAME, LOC 다나오게.
+
+  - ``` SQL 
+    SELECT E.EMPNO, E.ENAME, D.DNAME,D.LOC FROM EMP E, DEPT D
+    ```
+
+  - FOREIGN KEY / PRIMARY KEY 를 조건으로 걸어야 함.
+
+  - ``` SQL
+    SELECT E.EMPNO, E.ENAME, D.DNAME,D.LOC FROM EMP E, DEPT D WHERE E.DEPTNO = D.DEPTNO
+    ```
+
+    
+
 
 
 #### DDL 
@@ -303,6 +524,10 @@ SELECT ENAME, SAL, CASE WHEN SAL >= 5000  THEN '왕' WHEN SAL >= 3000 AND SAL <5
 ### JAVA
 
 #### JDBC (java data base connectivity)
+
+
+
+
 
 
 
