@@ -525,7 +525,8 @@ SELECT JOB, AVG(SAL) FROM EMP GROUP BY JOB HAVING JOB IN ('MANAGER', 'CLERK'); -
 
 #### JDBC (java data base connectivity)
 
-
+- 연동방법 
+  - Project - properties - java buildpath - lib - addExternal JARs - con oracke - product -11-server -JDBC -1.b-11,69
 
 
 
