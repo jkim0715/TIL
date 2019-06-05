@@ -151,3 +151,28 @@ Input Layer  // Hidden Layer // Output Layer
 
 ### ROS 기반 소프트웨어 구조 
 
+
+
+##### 물류용 자율 이동 로봇 개발 요소 기술
+
+무인지게차 제작기술
+
+자율주행/작업 기술 
+
+무인 지게차 운영기술
+
+
+
+#### 사업시작할 때 고려 해야할 ㄷ것 들
+
+- ##### BUSINESS MODEL CANVAS 
+
+  - Key partners(핵심파트너..)
+  - Key activities(핵심활동)
+  - Key resources(핵심자원)
+  - Value Propositions(가치제안)
+  - Customer relationships(고객관계)
+  - Channel (유통채널)
+  - Customer Segment(고객 새그먼트)
+  - Cost Structure (비용구조)
+  - Revenue Stream(수익흐름)
