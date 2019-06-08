@@ -1,3 +1,5 @@
+
+
 ``` java
 		
 		trnasactionStart();
@@ -44,3 +46,4 @@ public interface Shop {
   - 레고 블럭마냥 끼웟다 뺏다 할 수 있음.
   - 여러가지의 속성을 주입할 수 있다. (다중상속 가능)
   - 독립적인 작업가능.
+
