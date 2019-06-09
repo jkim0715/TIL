@@ -85,7 +85,17 @@ TV t;					// Tv클래스 타입의 참조변수 t를 선언
 t = new Tv();			// Tv인스턴스를 생성한 후, 생성된 Tv 인스턴스의 주소를 t에저장
 ```
 
+- 여러개의 객체를 생성 할 땐 객체배열을 통하여 생선한다.
 
+  - ```java
+    Tv[] tvArr = new Tv[3];
+    
+    for(i = 0; i < 3; i++){
+        tvArr[i] = new TV();
+    }
+    ```
+
+  - 
 
 
 
@@ -147,12 +157,4 @@ t = new Tv();			// Tv인스턴스를 생성한 후, 생성된 Tv 인스턴스의
 - 현실 - RFP - OOAD - OOP
 
 
-
-#### workshop
-
--UML로 각 클래스를 설계하시오
-
-1.  time.Time.java
-2. car.Car.java
-3. bank.Account.java
 
