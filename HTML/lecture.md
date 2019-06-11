@@ -124,9 +124,5 @@ HTML에서 여러개를 묶을수 있는 기능이 한개인데
 
 
 
-## Exercise:
 
-Add a "tooltip" to the paragraph below with the text "About W3Schools".
-
-<p ="About W3Schools">W3Schools is a web developer's site.</p>
 
