@@ -17,7 +17,8 @@
 - tomcat 9 
   - 64bit windows.zip
   - c 밑에 넣으셈.
-- 
+- new - Dynamic Web - next - next - day01 drag on to Tomcat9.0 
+- web - new - HTML - Select HTML Templete
 
 
 
