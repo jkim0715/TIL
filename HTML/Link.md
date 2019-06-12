@@ -180,3 +180,44 @@ img{
 
 
 
+#### Resume 만들기
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<style>
+	
+		table> tbody > tr{
+		text-align: center;
+	
+	}
+
+</style>
+
+
+<title>Insert title here</title>
+</head>
+<body>
+	<table border =1>
+	<thead>
+	</thead>
+	<tbody>
+	<tr><td rowspan="4"><img src = "img/m2.jpg"></td><td colspan ="4", id ="01">이력서</td></tr>
+	<tr><td rowspan ="2">성명</td><td rowspan ="2">김재영</td><td colspan ="2">주민등록번호</td></tr>
+	<tr><td colspan ="2">123456</td></tr>
+	<tr><td colspan ="4">생년월일  1991년 7월 15일생 (만  세)</td></tr>
+	<tr><td>주소</td><td colspan ="4">우리집</td></tr> 
+	<tr><td rowspan ="2">연락처</td><td>집</td><td >070-000-0000</td><td rowspan ="2">전자우편</td><td rowspan="2">506@multicam.com</td></tr>
+	<tr><td>핸드폰</td><td>010-0000-0000</td></tr>
+	</tbody>
+	</table>
+</body>
+</html>
+```
+
+
+
+
+
