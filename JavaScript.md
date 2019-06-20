@@ -325,7 +325,8 @@ var h1 = document.getElementById('h1').innerText; // 가져올때도 innerText  
 
 ### BOM (Browser Object Model)
 
-
+- 브라우저가 가지고 있는 모든 객체를 의미한다.
+- 
 
 
 
