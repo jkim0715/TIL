@@ -8,8 +8,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
 .dv{
-	display: inline;
-	float: left;
+	display: table-cell;
+	float:left;
+	padding: 10px;
+	
+}
+
+#divm{
+	width:400px;
 }
 .text{
 	font-size:10px;
@@ -373,7 +379,7 @@ $(document).ready(function(){
 </head>
 <body>
 <div class ="dv">
-	<div class ="dv">
+	<div id = "divm" class ="dv">
 		<table id ="t1">
 			<thead id = "thead1"><tr><th><h1>Cafeteria </h1></th></tr></thead>
 			<tbody id = "tbody1">

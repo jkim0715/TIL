@@ -411,12 +411,25 @@ controls = "controls"></video>
 
 #### div와 span
 
-- div
-  - block이라 다 차지하지만 사이즈를 결정할 수있다.
+- **div**
+  
+  - block이라 다 차지하지만 **사이즈를 결정할 수있다**.
   - div로 layout을 잡고 그 안에다 내가 치장하는 것임
-- span 
+  
+- **span** 
+  
   - div 안에서 한곳만 바꾸고 싶을때 span을 이용
   - span은 Inline임.
+  
+- div 와 span의 차이점.
+
+  -  div 가로폭을 전부 차지함. span 태그안의 내용만 차지함
+
+  -  필연적으로 줄 바꿈을 동반, span 줄 바꿈 없고 문장 중간에 들어갈 수 있음
+
+  -  table 태그 대신 div와 span 태그로 더욱 간결한 html을 구성할 수 있다.
+
+    
 
 ```html
 <!DOCTYPE html>
