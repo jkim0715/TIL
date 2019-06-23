@@ -153,7 +153,7 @@ public Object select(Object obj){
 
 #### Generics
 
-
+- 클래스 내부에서 사용할 데이터 타입을 외부에서 지정.
 
 
 
@@ -181,6 +181,30 @@ System.out.println(set.toString());// 보면 중복 허용안함...순서마구�
 
 
 - List  - 순서 있음, 속도 느림
+
+```java
+import java.util.Arraylist;
+
+public static main (String[] args){
+//ArrayList 선언
+    ArrayList al = new ArrayList();
+// 순서대로 들어간다, 넣을떈 .add();
+// add() 안에 인자는 object 로 저장됨.    
+    al.add("one");
+    al.add("two");
+    al.add("three");
+// 출력시 .get();    
+    for(int i=0; i<al.size(); i++){
+        System.out.println(al.get(i));
+//Object 타입을 String 타입인 변수에 넣으려고 하면 에러남        
+        String value = al.get(i);
+// 따라서 형변환이 필요함
+        String value = (String)al.get(i);
+    };
+}
+```
+
+
 
 ``` java
 ArrayList<Integer> list = new ArrayList<>();

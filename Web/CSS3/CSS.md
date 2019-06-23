@@ -48,11 +48,11 @@
 
   - ```css
     	input[type="text"]{
-    		background: yellow; 
-    	}
-    	input[name="id"]{
-    		background: yellow; 
-    	}
+      		background: yellow; 
+      	}
+      	input[name="id"]{
+      		background: yellow; 
+      	}
     ```
 
   - 
@@ -61,7 +61,7 @@
 
   - 
 
-- 자손,자식, 형제 결합자
+- ### 자손,자식, 형제 결합자
 
   - ```css
     s1의 직계자식 s2 선택 (자식)
