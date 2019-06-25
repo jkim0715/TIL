@@ -234,5 +234,139 @@ public class ChartServlet extends HttpServlet {
 
 
 
+#### chart만들기 
+
+- www.highcharts.com
+  - demo
+    - Edit in JSFIDDLE
+
+
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- highcharts library  -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+<style></style>
+<script>
+function makeChart(data){
+	
+	Highcharts.chart('container', {
+    chart: {
+// 종류별로 chart 바꿀 수 있음 line, pie, bar 		
+        type: 'line'
+    },
+    title: {
+        text: 'Seoul Monthly Average Temperature'
+    },
+ 
+    xAxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    },
+    yAxis: {
+        title: {
+            text: 'Temperature (°C)'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+	},
+// JSON만 Series에 넣어주면 됨 !	
+// data는 JSON형태로 서버에서 받아올거임 	
+	series: data
+	// [{
+    //     name: 'Seoul',
+    //     data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+    // }, {
+    //     name: 'Busan',
+    //     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+    // }, {
+    //     name: 'Daegu',
+    //     data: [5.9, 6.2, 9.7, 10.5, 13.9, 17.2, 19.0, 18.6, 16.2, 8.3, 7.6, 5.8]
+    // }]
+	});
+}; // end makeChart
+
+function getData(){
+	$.ajax({
+		url:'hchart',
+		success: function(data){
+		// String으로 출력된 결과를 다시 java ㅊcoding으로 변경 eval.	
+			makeChart(eval(data));
+		}
+	});
+};
+
+$(document).ready(function(){
+// 문서가 준비가 되면 getdata 요청
+	getData();
+	setInterval(getData,5000);	
+// chart그리기 	
+	// makeChart();
+	// setInterval(makeChart,5000);
+
+
+}); 
+</script>
+</head>
+<body>
+	<h1>My Charts</h1>
+<!-- highchats 에서 가저온 양식	 -->
+	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>
+```
+
+#### 서버 hchart
+
+```html
+protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		Random r = new Random();
+		JSONArray ja = new JSONArray();
+		
+		
+		String datas[] = {"Seoul","Busan","Daegu"};
+		
+		for(int i=0; i<3; i++) {
+			int temp = r.nextInt(20)+1;
+			
+			JSONObject jso = new JSONObject();
+			jso.put("name", datas[i]);
+	// data도 array형식이라 한개더 생성		
+			JSONArray js = new JSONArray();
+			for(int j=0; j<12; j++) {
+				js.add(r.nextInt(30)+1);
+			}
+			jso.put("data", js);
+			ja.add(jso);
+		}
+		
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+	// 결과를 String으로 출력 	
+		out.print(ja.toJSONString());
+		out.close();
+		
+	}
+}
+```
+
+
+
+
+
 
 
