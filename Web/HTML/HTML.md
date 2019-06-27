@@ -574,9 +574,8 @@ PWD <input type ="password" name = "pwd"><br>
 <!--선택버튼 -->
 	<select name = "car">
 		<option value ="h">Hyundai</option>
-		<option value ="k">Kia</option>
-		<option value ="s">SSang</option>
-		<option value ="c">Chev</option>
+		<option value ="k">Comedy</option>
+		<option value ="s">Romance</option>
 	</select>
 <!-- 파일 업로드 버튼. 
 form 태그에 속성으로  enctype ="multi-part/form-data"  를 추가해주는게 좋음.  -->
