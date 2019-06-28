@@ -1,3 +1,23 @@
+## OPEN API
+
+##### OPEN API란?
+
+- Open Application  Programming Interface 
+  - 누구나 사용할 수 있도록 공개된 데이터
+
+- 빅데이터를  XML 혹은 JSON형태로 서버에 저장해두고 필요한 사람에게 서비스 하는 것
+
+
+
+
+
+- 공공 데이터 포털
+  - https://www.data.go.kr 
+- 차트 양식 다운 받는 사이트
+  - www.highcharts.com
+
+
+
 - 쉬운버전
 
 ```xml

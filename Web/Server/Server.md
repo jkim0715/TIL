@@ -55,12 +55,12 @@
 
     - ```html
       		// 값을 넣어줄수 있다
-      		request.setAttribute("id", id);
-      		
-      		// 객체 만들고 forward 함.
-      		RequestDispatcher rd = request.getRequestDispatcher("ok.jsp");
-      		rd.forward(request, response);
-      		
+        		request.setAttribute("id", id);
+        		
+        		// 객체 만들고 forward 함.
+        		RequestDispatcher rd = request.getRequestDispatcher("ok.jsp");
+        		rd.forward(request, response);
+        		
       ```
 
     - ```jsp
@@ -129,6 +129,16 @@
 -   포워딩될 때 브라우저의 주소 표시줄의 URL이 변경된다. 포워딩된 jsp페이지에서는 서블릿에서 request영역에 공유한 속성값에 접근 할 수 없다.
 
   
+
+
+
+Servlet 이 많이 생성되어있어도 invoke되기전에는 memory에 올라가있지않음.
+
+최초의 누군가가 요청하면 그제서야 돌아가면서 메모리에 올라감.
+
+따라서 constructor는 메모리에 올라갈 때 최초에 한번 실행되고 끝 !.
+
+
 
 
 
