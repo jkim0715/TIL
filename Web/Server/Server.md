@@ -1,6 +1,6 @@
 ## **server**
 
-![How Server Interacts](C:\Users\student\Desktop\m1.jpg)
+
 
 ##### 서버파일 위치 (Servlet)
 
@@ -55,12 +55,12 @@
 
     - ```html
       		// 값을 넣어줄수 있다
-      		request.setAttribute("id", id);
-      		
-      		// 객체 만들고 forward 함.
-      		RequestDispatcher rd = request.getRequestDispatcher("ok.jsp");
-      		rd.forward(request, response);
-      		
+        		request.setAttribute("id", id);
+        		
+        		// 객체 만들고 forward 함.
+        		RequestDispatcher rd = request.getRequestDispatcher("ok.jsp");
+        		rd.forward(request, response);
+        		
       ```
 
     - ```jsp
