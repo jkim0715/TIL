@@ -47,6 +47,7 @@ CentOS 설정
 6. terminal 에서 gedit /etc/sysconfig/network-scripts/ifcfg-ens33   ex)ens33 달라질 수 있음.
 7. Mac addr 복사한거 HWADDR 에 붙여넣기 ex)00:50:56:35:05:0C
 
+<<<<<<< HEAD
 
 
 ### 3. 가상 컴퓨터 설정 (매우 중요)
@@ -113,3 +114,7 @@ HDD: 30G
 MEMORY :4G
 
 IP: 192.168.111.200
+=======
+내일 한번더 깔아보기
+
+>>>>>>> 1be5e7c562e5dff4d444362788a095b2647f90a0
