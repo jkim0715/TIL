@@ -106,10 +106,22 @@ gedit /etc/sysconfig/network-scripts/ifcfg-ens33
 
 ### 4.WinClient 설치해보기
 
-display name: WIN10
+display name: WIN8
 
 HDD: 30G
 
 MEMORY :4G
 
 IP: 192.168.111.200
+
+- N6KXJ - P6YWY - 4C92Q - J7BVB - R6XGM
+- Window만 설치 하기로  INSTALL하기.
+- 계정 없이 로그인으로 설정 
+- HOTS file에 IP ADDRESS랑 이름 등록해두기
+
+
+
+윈도우에서 다른 컴퓨터 가상머신으로 접근 할 수 있도록 만들어 보기.
+
+
+
