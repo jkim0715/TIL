@@ -39,7 +39,7 @@ CentOS 설정
 
 ### 2. 가상머신 파일을 복사해서 Clone 만들기
 
-1. CENTOS 를 복사하여 CENTOS2를 만들고 
+1. C드라이브에 있는 CENTOS 를 복사하여 CENTOS2를 만들고 
 2. Configuration file의 displayname을 바꾸고
 3. VMware에서 CENTOS2 로 들어가서 추가하기.
 4.  반드시 moved it 을 선택하여 실행.
@@ -121,7 +121,121 @@ IP: 192.168.111.200
 
 
 
-윈도우에서 다른 컴퓨터 가상머신으로 접근 할 수 있도록 만들어 보기.
+윈도우에서 다른 컴퓨터 가상머신으로 접근 할 노ㅕㅅ수 있도록 만들어 보기.
+
+
+
+
+
+# 서버 구축시 필수 개념 및 명령어
+
+### 시작과 종료 (p147)
+
+##### 종료
+
+- poweroff
+- shutdown -p now
+  - now 자리에 숫자를 쓰면 몇분 후 에 종료인지 명시
+  - ex) shutdown -p +3  : 3분후에 종료.
+- halt -p
+- init 0
+
+
+
+단축키
+
+- TAB  :자동완성
+- Ctrl + l :콘솔창 청소 
+
+### 리눅스 기본 명령어 (p183)
+
+- cd : (change directory) home으로 가기
+  - cd ~centos 
+    - centos라는 사용자의 홈으로 가기
+  - cd .. 
+    - 바로 상위 dir로 이동                   
+  - cd /etc/sysconfig
+    - /etc/sysconifg 경로대로 이동
+  - cd ../etc/sysconfig
+    - 상대 경로로 이동
+
+- pwd	: (print working directory)
+- ls : (LiSt) directory 내 파일명 출력
+  - ls /etc/sysconfig
+  - ls -a
+    - 숨김파일 목록도 표시
+  - ls -l
+    - 현재 dir 목록을 자세히 보여줌
+  - ls -la
+  - ls *.cfg
+    - 확장자가 cfg인 애들을 보여줌
+  - ls -l .etc.sysconfig/a*
+    - 앞글자가 a인거 list 하기.
+  - man ls
+    - 매뉴얼 보기
+- su : Switch User
+  - su centos
+  - su root (관리자 비번 필요)
+  - exit : logout 같은거  (가상의 공간에서 여러개의 계정으로 계속 들어갈 수 있다.) 맨 끝까지 exit하면 터미널 종료됨.
+- rm : ReMove
+  - rm abc.txt
+  - rm -i abc.txt
+    - 삭제시 한번 더 물어봄
+  - rm -f abc.txt
+    - 확인하지 않고 바로 삭제
+  - rm -r abc
+    - 해당 dir을 삭제
+  - rm -rf abc
+    - dir와 그아래 파일들 싹 다 삭제 
+- cp : CoPy
+  - cp abc.txt cba.txt
+  - cp -r abc cba
+- mv : Move
+  - mv abc.txt /etc/sysconfig/
+  - mv aaa bbb ccc ddd
+  - mv abc.txt www.txt
+- mkdir : MaKe DIRectory
+  - mkdir dir1
+  - mkdir -p /def/fgh
+- rmdir : ReMove DIRectory
+  - rmdir abc
+  - rm -rf dir
+
+- history : 명령어 기록보기. 방향키를 눌러 선택가능
+
+- cat (file_name) : 문서를 콘솔창에 display
+
+  - more (file_name) : space를 치면 조금씩 내려감. 천천히 볼 수 있음.
+
+- touch 를 이용하여 원하는 파일 생성
+
+  
+
+
+
+vi : 명령모드 진입. (p165 참고)
+
+- vi (file name) 으로 원하는 파일의 명령모드 진임.
+-  :  누르고 q   : 나가기
+  - q!  저장 안하고 나가기.
+  - Terminal을 비정상적으로 종료했을 시 swp file로 저장된다.
+  - ls -al
+    - rm .t2.txt.swp   :swp 파일 지워서 메시지 안뜨게 하기
+-  i :  insert mode
+  - 명령모드로 ESC를 누르면 나가짐
+  - 소문자 I는 왼쪽  a는 오른쪽
+  - 대문자 I는 왼쪽 끝  대문자 A는 오른쪽 끝으로 커서 이동
+- : wq (file name)   파일이름 저장하고 나오기
+- y 누르고 p  :복사 붙혀넣기
+- hjkl : 방향 키 
+
+
+
+### 사용자 관리
+
+
+
+
 
 
 
