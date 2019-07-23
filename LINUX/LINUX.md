@@ -233,9 +233,203 @@ vi : 명령모드 진입. (p165 참고)
 
 ### 사용자 관리
 
+리눅스는 다중 사용자 시스템이다. 즉 1대의 리눅스에 사용자 여러명이 동시에 접속 가능.
+
+
+
+사용자와 그룹
+
+/etc/passwd 로 사용자 정보 확인
+
+
+
+사용자관리 명령어
+
+- useradd
+  - useradd newuser
+    - newuser 라는 사용자 생성
+  - useradd -u 1111 newuser
+    - newuser라는 아이디를 생성하면서 사용자 ID를 1111로 지정
+  - useradd -g myhome newuser
+    - newuser라는 사용자를 생성하면서 mygroup에 newuser 사용자 포함(mygroup을 먼저 만들어야함)
+  - useradd -d /newhome newuser
+    - newuser 사용자를 생성하면서 홈 디렉터리를 /newhome으로 지정
+  - useradd -s /bin/csh newuser 
+    - newuser 사용자를 생성하면서 기본 셸을 /bin/csh로 지정
+- passwd
+  - passwd newuser
+    - newuser의 비밀번호 생성
+- usermod 
+  - usermod -g root newuser
+    - newuser의 사용자의 그룹을 root그룹으로 변경
+- userdel
+  - userdel newuser 
+  - userdel -r newuser 
+    - newuser를 삭제하면 홈디렉토리까지 삭제 
+- change
+  - change -l newuser
+    - newuser사용자에 설정된 사항 확인
+  - change -m 2 newuser
+    - newuser 사용자에 설정한 암호를 사용해야하는 최소 일자 (즉 변경 후 최소 2일 사용해야함)
+  - change -M 30 newuser
+    - newuser 사용자에 설정한 암호를 사용할 수 있는 최대 일자.
+  - change -E 2019/07/23
+    - newuser 사용자에 설정된 비번 만료날자
+  - change -W 10 newuser
+    - newuser 사용자에 설정한 암호가 만료되기 전에 경고하는 기간, 기본값 7일 
+- groups
+  - groups
+    -  현재 사용자의 소속을 보여줌
+  - groups newuser
+    - newuser가 소속된 그룹을 보여줌
+- groupadd
+  - groupadd newgroup
+    - newgroup이라는 그룹을 생성
+  - groupadd -g 2222 newgroup
+    - 그룹을 생성하면서 그룹 ID를 2222로 설정
+- groupmod
+  - groupmod -n newgroup mygroup 
+    - newgroup의 이름을 mygroup으로 바꿈
+- groupdel
+  - groupdel newgroup 
+    - newgroup삭제
+- gpasswd
+  - gpasswd newgroup
+    - newgroup암호지정
+  - gpasswd -A newuser newgroup 
+    - newuser사용자를 newgroup의 관리자로 지정
+  - gpasswd -a user1 newgroup
+    - user1을 newgroup의 사용자로 추가
+  - gpasswd -d newuser newgroup
+    - user1을 newgroup 사용자에서 제거
+
+
+
+파일과 디렉토리 소유와 허가권
+
+파일 유형 
+
+- d (디렉토리)
+- -(일반파일)
+- b(블록파일)
+- c(문자 디바이스)
+- l(링크)
+
+
+
+파일 허가권 (Read, Write, X)
+
+| 소유자    | 그룹      | 그외 사용자 |
+| --------- | --------- | ----------- |
+| r - w - x | r - w - x | r - w - x   |
+| 4 - 2 - 1 | 4 - 2- 1  | 4 - 2 - 1   |
+
+- chmod _ _ _ (file/dir)
+  - chmod 4 4 0 musersfile
+
+파일 소유권
+
+
+
+- chown 으로 바꿀 수 있음
+  - chown .group (file/dir)  (file/dir)의 그룹권한을 바꿀 수있음
+- chgrp 로도 가능
+
+
+
+
+
+링크
+
+- 하드링크
+  - 용량 그대로
+- 심볼릭 링크
+  - 바로가기 같은 느낌  용량 없음
+
+
+
+파일 위치 검색
+
+- find
+  - find ~ -size 0k -exec cp {} temp \;
+
+
+
+파일 압축 및 묶음
+
+- xz
+  - xz 파일이름
+  - xz -d 파일이름
+  - xz -l 파일이름
+  - xz -k 파일이름
+- bzip2
+  - bzip2 파일이름
+  - bzip2 -d 파일이름
+- gzip
+  - gzip 파일이름
+  - gzip -d 파일이름.gz
+- zip
+
+
+
+파일 다운로드
+
+YUM
+
+- yum -y install 패키지이름
+  - 패키지이름
+- yum localinstall rpm파일이름.rpm
+- yum groupinstall "패키지 그룹 이름"
+  - 패키지 그룹이름은 자기가 직접 서치해야함.
+
+RPM
 
 
 
 
 
 
+
+시스템 전역변수 설정
+
+- vi /etc/profile
+
+  - ```
+    JAVA_HOME=/etc/jdk1.8
+    export JAVA_HOME
+    CLASSPATH=$JAVA_HOME/lib
+    export CLASSPATH
+    PATH=.:JAVA_HOME/bin:$PATH
+    ```
+
+    
+
+
+
+Eclipse 설치하기
+
+- home 에 file 이라는 폴더를 만들고  eclipse .tar.gz 파일을 넣어둔다
+- tar xvf eclipse- jee- oxygen- 3a- linux- gtk- x86_64.tar.gz  
+  - 압축, 묶음 동시에 풀기
+  - tab키를 잘 활용한다
+- cp -r eclipse /etc
+  - etc 밑에 이클립스 폴더 복사 
+- cd /usr/bin
+  - 여기 밑에 링크파일 만들거임
+- ln -s  /etc/eclipse/eclipse eclipse
+  - 심볼릭 링크 만들기
+
+Tomcat 9.0 설치하기
+
+- file이라는 폴더안에 tomcat.tar.gz 파일 넣어두고
+- tar xvf tomcatxxxxxx.tar.gz
+  - 압축 풀기
+- 압축 풀면 설치 끝
+- firewall-config 
+  - HTTP 체크
+  - 1521포트 추가
+- conf 폴더 
+  - 들어가서 Server.xml 에 포트 8080을 80으로 바꾸기
+- bin 폴더
+  - startup.sh 서버 실행 
+  - shutdown.sh 서버 종료 
