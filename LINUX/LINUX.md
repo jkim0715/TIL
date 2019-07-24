@@ -372,6 +372,49 @@ vi : 명령모드 진입. (p165 참고)
 
 
 
+압축풀기
+
+- tar
+
+- 동작
+
+  - c (소문자) 
+    - 새로운 묶음을 만든다
+  - x
+    - 묶인 파일을 푼다
+  - t
+    - 묶음을 풀기전에 묶인 경로를 보여준다
+  - C(대문자)
+    - 묶음을 풀 떄 지정된 디렉터리에 압축을 푼다. 지정하지 않으면 묶을 떄와 동일한 디렉토리에 묶음이 풀린다
+
+- 옵션
+
+  - f(필수)
+
+    - 묶음 파일 이름 지정, 원래 tar는 테이프 장치 백업이 기본이다.(생략하면 테이프로 보내짐)
+
+  - v 
+
+    - visual의 의미로 파일이 묶이거나 풀리는 과정을 보여준다
+
+  - J(대문자)
+
+    - tar+xz
+
+  - z(소문자)
+
+    - tar + gzip
+
+  - j(소문자)
+
+    - tar + bzip2
+
+    
+
+  
+
+
+
 파일 다운로드
 
 YUM
@@ -386,7 +429,25 @@ RPM
 
 
 
+JDK 설치하기
 
+- mkdir file
+
+- cd/file 
+
+  - file에 복사해서 붙혀넣기
+
+- ```
+  tar xvf jdk-8u221-linux-x64. tar.gz
+  mv jdk1.8.0_221/ jdk1.8
+  cp -r jdk1.8 /etc
+  cd /usr/bin
+  ln -s /etc/jdk1.8/bin/java java
+  ```
+
+- 
+
+- 
 
 
 
@@ -433,3 +494,122 @@ Tomcat 9.0 설치하기
 - bin 폴더
   - startup.sh 서버 실행 
   - shutdown.sh 서버 종료 
+
+
+
+CRON
+
+- minute hour dayofmonth month dayofweek username command to be executed.
+
+```
+vi /etc/crontab
+```
+
+- ex) 매월 24일 11시 10분에 home을 backup에 카피
+  - ```
+    10 11 24 * * root cp -r /home /backup
+    ```
+
+- systemctl status crond
+
+  - crondemon. 눈에 보이지 않지만 뒤에서 돌아가는 process.
+
+- systemctl restart crond
+
+
+
+- 특정 dir에 실행 파일 넣어두고 주기적으로 동작 시킬 수 도 있음.
+
+- /etc 
+  - ls cron* 
+    - daily / hourly / monthly / weekly 디렉토리가 있다.
+
+
+
+AT
+
+- 일회성 작업을 예약 실행 ( 한번 실행 후 소멸 )
+
+- ```
+  at 11:25 am today
+  cp -r /home /backup
+  reboot
+  ```
+
+- 오늘 11시 25분에  home을 backup 폴더에 카피 후 리부팅. 
+
+- Ctrl + D 를 눌러서 edit창 종료.
+
+
+
+정확한 시간을 맞추는 방법
+
+```
+rdate -s time.bora.net
+```
+
+
+
+Oracle DB Express 설치
+
+- www.oracle.com 
+
+  - 리눅스용 오라클 11g  Release 2 를  다운 받아서 file에 넣어두기
+
+- unzip oracle
+
+  - zip파일로 압축 되어있는 파일을 풀면 Disk1
+
+- 먼저 메모리 swap을 충분히 확보
+
+  - ```
+    dd if=/dev/zero of=/swapfile bs=1024 count=4194304
+    mkswap /swapfile
+    swapon /swapfile
+    swapon -s
+    ```
+
+  - 기존 2기가에 4기가 추가.
+
+  - 재부팅 후에도 사용하려면
+
+    - ```
+      /etc/rc.d/
+      chmod 755 rc.local
+      
+      ```
+
+    - ```
+      vi rc.local
+      swapon /swapfile
+      ```
+
+- 설치
+
+  - cd /root/file/Disk1
+  - ls -l
+  - yum -y localinstall oracle*
+
+- service oracle-xe configure  또는 /etc/init.d/oracle-xe configure 를 입력해 환경설정
+
+  - Specify the HTTP ~~Application Express (8080) :
+  - Specify the port ~~ database listner (1521) :
+  - Specify password ~ initial cofiguration: 암호입력
+  - confirm password
+  - Do you want ~~boot : [y]
+
+- 설치가 완료되면
+
+  - /etc/init.d/oracle-xe start  로 실행
+  - start/stop/status
+
+- 오라클 환경 설정
+
+  - . /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh  (제일앞에 . / 공백있음)
+  - vi /etc/bashrc 에 똑같이 적어주면 재부팅 후에도 설정유지
+    - . /u01/app/oracle/product/11.2.0/xe/bin.oracle_env.sh
+
+- firewall-config
+
+  - 포트 8080 추가
+  - 포트 1521 추가 
