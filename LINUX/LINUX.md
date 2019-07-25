@@ -613,3 +613,147 @@ Oracle DB Express 설치
 
   - 포트 8080 추가
   - 포트 1521 추가 
+
+
+
+
+
+관리자 명령어
+
+파이프(pipe)
+
+- ls -a | more
+  - 첫번째 명령어에 더해서 다른 명령어를 더하고 싶을 때 사용
+
+
+
+ps -ef 
+
+- 프로그램에서 사용하고 있는 모든 프로세스를 리스트
+- ps -ef | grep oracle
+  - grep을 사용하여 oracle 필터링
+- ps -ef | grep java
+  - kill 61292 
+
+
+
+kill 
+
+- 현재 동작하고 있는 프로세서 를 강제적으로 죽임
+  - kill -9
+    - 강제로 죽이기
+
+
+
+Redirection
+
+- 터미널에서 실행된 내용을 파일로 만들 수 있음
+- ls -l > list.txt
+- sort < 20190725.txt > sort201907125.txt
+
+
+
+foreground 
+
+- 터미널 조작 불가. 
+- yes
+- 
+
+ background로 프로그램돌리기
+
+- yes end
+
+- gedit &
+
+
+
+Maria DB 설치
+
+- 마리아 DB 설치파일 받기
+
+  - ```
+    MariaDB-10.0.15-centos7_0-x86_64-client.rpm
+    MariaDB-10.0.15-centos7_0-x86_64-common.rpm
+    MariaDB-10.0.15-centos7_0-x86_64-server.rpm
+    ```
+
+- 다운로드한 파일설치
+
+  - ```
+    yum -y remove mariadb-libs
+    ```
+
+    -  설치 전 충돌나는 파일 미리 제거
+
+  - yum -y localinstall Maria*
+
+- 실행
+
+  - ```
+    systemctl restart mysql
+    systemctl status mysql
+    chkconfig mysql on
+    ```
+
+- firewall-config
+
+  - mysql 포트 오픈 
+
+
+
+MariaDB 활용
+
+- ADMIN 계정 설정
+  - mysqladmin -u root password '111111'
+- ADMIN 계정 접속
+  - mysql -u root -p
+    - 비밀번호 입력.
+- 
+
+
+
+유저정보
+
+- SELECT user, host from user;
+
+  - 유저정보 조회
+
+- 유저 권한 추가
+
+  - ```
+    GRANT ALL PRIVILEGES ON *.* TO user@'192.168.111.%' IDENTIFIED BY '111111';
+    ```
+
+  - 
+
+유저로 로그인
+
+- mysql -h localhost -u user1 -p
+- 
+
+
+
+workspace 생성
+
+- create database shop;
+- USE shop
+
+
+
+TABLE 작성
+
+- ```
+  CREATE TABLE PRODUCT(
+  	ID INT PRIMARY KEY,
+  	NAME NVARCHAR(20) NOT NULL,
+  	PRICE INT NOT NULL,
+  	REGDATE DATE
+  );
+  ```
+
+- ```
+  INSERT INTO PRODCUT VALUES (100, 'pants1',10000, SYSDATE());
+  ```
+
+  - TABLE 이름 대소문자 구분 !!
+  - SYSDATE는 함수로 사용한다.
