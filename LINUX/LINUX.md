@@ -618,6 +618,8 @@ Oracle DB Express 설치
 
 
 
+
+
 관리자 명령어
 
 파이프(pipe)
@@ -757,3 +759,63 @@ TABLE 작성
 
   - TABLE 이름 대소문자 구분 !!
   - SYSDATE는 함수로 사용한다.
+
+
+
+
+
+하드디스크 추가하기 
+
+VMware 는 두가지 종류의 장치 사용가능
+
+1. IDE(PC)
+   - 백업 
+2. SCSI (Server)
+
+
+
+과정
+
+1. Add를 눌러 Harddisk 를 선택하고 추가
+2. 1기가 추가 
+3. specify disk file
+   1. scsi0-1
+
+
+
+설정
+
+1. ls - l /dev/sd*
+
+   1. 일단 추가된 하드디스크 이름 검색
+
+2. ```
+   fdisk /dev/sdb
+   Command :n
+   Select :p
+   Partition number : 1
+   First sector : enter
+   Last sector : enter
+   
+   ```
+
+3. 
+
+
+
+
+
+
+
+Maria DB
+
+1. Query 문 새로작성
+   - DDL
+   - DML - squence
+
+2. Spring MVC
+   - MariaDB JDBC 설치
+     - maven
+   - Spring 환경설정
+3. Mybatis Mapper 작업
+   - XML
