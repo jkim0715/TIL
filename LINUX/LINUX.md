@@ -415,7 +415,7 @@ vi : 명령모드 진입. (p165 참고)
 
 
 
-파일 다운로드
+### **파일 다운로드**
 
 YUM
 
@@ -429,7 +429,7 @@ RPM
 
 
 
-JDK 설치하기
+##### JDK 설치하기
 
 - mkdir file
 
@@ -467,7 +467,7 @@ JDK 설치하기
 
 
 
-Eclipse 설치하기
+##### Eclipse 설치하기
 
 - home 에 file 이라는 폴더를 만들고  eclipse .tar.gz 파일을 넣어둔다
 - tar xvf eclipse- jee- oxygen- 3a- linux- gtk- x86_64.tar.gz  
@@ -480,7 +480,7 @@ Eclipse 설치하기
 - ln -s  /etc/eclipse/eclipse eclipse
   - 심볼릭 링크 만들기
 
-Tomcat 9.0 설치하기
+##### Tomcat 9.0 설치하기
 
 - file이라는 폴더안에 tomcat.tar.gz 파일 넣어두고
 - tar xvf tomcatxxxxxx.tar.gz
@@ -550,7 +550,7 @@ rdate -s time.bora.net
 
 
 
-Oracle DB Express 설치
+##### Oracle DB Express 설치
 
 - www.oracle.com 
 
@@ -669,7 +669,7 @@ foreground
 
 
 
-Maria DB 설치
+##### Maria DB 설치
 
 - 마리아 DB 설치파일 받기
 
@@ -764,7 +764,7 @@ TABLE 작성
 
 
 
-하드디스크 추가하기 
+##### 하드디스크 추가하기 
 
 VMware 는 두가지 종류의 장치 사용가능
 
@@ -807,7 +807,7 @@ VMware 는 두가지 종류의 장치 사용가능
 
 
 
-Maria DB
+### Maria DB
 
 1. Query 문 새로작성
    - DDL
