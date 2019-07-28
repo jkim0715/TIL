@@ -243,7 +243,7 @@ vi : 명령모드 진입. (p165 참고)
 
 
 
-사용자관리 명령어
+###### 사용자관리 명령어
 
 - useradd
   - useradd newuser
@@ -339,7 +339,7 @@ vi : 명령모드 진입. (p165 참고)
 
 
 
-링크
+###### 링크
 
 - 하드링크
   - 용량 그대로
@@ -620,7 +620,7 @@ rdate -s time.bora.net
 
 
 
-관리자 명령어
+##### 관리자 명령어
 
 파이프(pipe)
 
@@ -703,7 +703,7 @@ foreground
 
 
 
-MariaDB 활용
+###### MariaDB 활용
 
 - ADMIN 계정 설정
   - mysqladmin -u root password '111111'
