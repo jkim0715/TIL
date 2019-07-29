@@ -799,7 +799,200 @@ VMware 는 두가지 종류의 장치 사용가능
    
    ```
 
-3. 
+3. 마운트 및 마운트 유지하기
+
+   - mkdir /mydata
+
+   - mount /dev/sdb1 /mydata
+
+   - vi /etc/fstab 
+
+   - ```
+     /dev/sdb1 /mydata ext4 defaults 1 2
+     ```
+
+4. 장치 제거
+
+   1. fstab에 마운트 설정해 놓은 것 부터 제거 한다.
+
+      - ```
+        vi /etc/fstab
+        
+        # 주석으로 막거나 
+        dd 로 삭제
+        실수 하면 q! 로 저장안하고 나가거나
+        u 를 눌러 undo 하기
+        ```
+
+      - 
+
+   2. 물리적으로 HD를  제거한다
+
+
+
+RAID & LVM
+
+여러 하드디스크를 하나의 하드디스크 처럼 사용할 수 있게 만들 수 있음.
+
+하드웨어 RAID
+
+소프트웨어 RAID
+
+
+
+RAID 종류
+
+- linear
+  - 두개 하드디스크 사용 하나 꽉차면 다른하나 사용하기 시작
+  - 뻥나면 쥐쥐 (파일이 첫번째 하드디스크보다 작다면 살아있을 수도... 첫번째 하드가 뻥나면 쥐쥐)
+- RAID0 
+  - 두개의 하드디스크를 동시에 사용
+  - 데이터가 두개의 하드디스크로 나눠서 들어가짐
+  - 뻥나면 쥐쥐
+- RAID1
+  - 하드디스크 두개 동시에사용
+  - 미러링
+  - 하나는 백업용..  때문에 **용량을 반밖에 사용하지 못함**
+- RAID5
+  - RAID0 과 RAID1를 합쳐 개선한 것
+  - 페리티 비트를 사용하여 백업도모
+  - 3개이상의 하드디스크를 묶어야 함.
+  - 3개중 하나가 고장나도 복구가능. 그러나 두개이상 고장나면 복구불가능
+
+
+
+
+
+사전준비 
+
+Edit virtual machine setting 에서 하드디스크 추가하기
+
+
+
+Linear RAID 
+
+1. 각각의 Disk fdisk - fd
+
+2. mdadm - 디스크 묶기
+
+   - ```
+     mdadm --create /dev/md9 --level=linear --raid-devices=2 /dev/sdb1 /dev/sdc1
+     ```
+
+3. mkfs.ext4 -- ext4 방식으로 포멧
+
+   - ```
+     mkfs.ext4 /dev/md9
+     ```
+
+4. folder 생성 (linear)
+
+   - ```
+     mkdir /linear
+     ```
+
+5. mount 
+
+   - ```
+     mount /dev/md9 /linear
+     ```
+
+6.  /etc/fstab
+
+   - ```
+     vi /etc/fstab
+     
+     /dev/md9 /linear ext4 default 1 2
+     ```
+
+RAID0
+
+- ```
+  mdadm --create /dev/md0 --level=0 --raid-devices=2 /dev/sdd1 /dev/sde1
+  ```
+
+RAID1
+
+- ```
+  mdadm --create /dev/md1 --level=1 --raid-devices=2 /dev/sdf1 /dev/sdg1
+  ```
+
+RAID5
+
+- ```
+  mdadm --create /dev/md5 --level=5 --raid-devices=2 /dev/sdh1 /dev/sdi1 /dev/sdk1
+  ```
+
+  
+
+하드 고장내고 새로 추가하기
+
+Edit virtual machine setting 에서 remove Hardisk 로 고의적으로 하드디스크 제거하기
+
+
+
+- 부팅이 안되면 root 비밀번호 치고 터미널로 들어가기
+  - 부팅이 안되는 이유는 /etc/fstab에 하드디스크를 자동으로 마운트 시키는데 하드디스를 못찾기 때문.
+  - 따라서 vi /etc/fstab 로 fstab에 접근 후 해당 라인 주석처리 / 삭제
+
+- linear 나 RAID0 은 회생불가
+
+- RAID 1 이랑 RAID 5는 회생가능 하므로
+
+  - ```
+    mdadm --run /dev/md1
+    mdadm --run /dev/md5
+    
+    을 입력하여 RAID 실행
+    
+    ls /raid1
+    ls /raid5
+    를 통해 파일이 살아있는 것을 확인.
+    ```
+
+  - 
+
+새로운 하드디스크 추가하여 RAID 복구하기
+
+Edit virtual machine setting에서 새로운 하드디스크 를 추가
+
+- SCSI 포트넘버는 상관없음
+
+
+
+일단 실행되고 있는 RAID를 STOP
+
+- ```
+  mdadm --stop /dev/md9
+  mdadm --stop /dev/md0
+  ```
+
+새로 RAID 생성
+
+- ```
+  mdadm --create /dev/md9 --level=linear --raid-devices=2 /dev/sdb1 /dev/sdc1
+  ```
+
+새로 마운트를 걸어줘도 보이는 파일은 손상된 파일이므로 미리 포멧 진행
+
+- ```
+  mkfs.ext4 /dev/md9
+  ```
+
+새로 마운트
+
+- ```
+  mount /dev/md9 /linear
+  ```
+
+잘 돌아가는지 확인
+
+- df
+  - 동작하고 있는 device를 나열해줌
+- mdadm --detail /dev/md9
+  - /dev/md9 ( linear raid ) 의 상세정보를 확인.
+
+
 
 
 
@@ -819,3 +1012,10 @@ VMware 는 두가지 종류의 장치 사용가능
    - Spring 환경설정
 3. Mybatis Mapper 작업
    - XML
+
+
+
+
+
+
+
