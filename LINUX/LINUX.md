@@ -55,6 +55,8 @@ CentOS 설정
    - cd /etc/yum.repos.d/
    - ls
    - gedit CentOS-Base.repo
+     - 최소모드로 LINUX를 설치 했을 경우 wget이 없기 떄문에 먼저 설치해야함
+     - yum -y install wget* 로 설치
    - released updates 부분 삭제
    - gedit CentOS-Sources.repo
    - released updates 삭제
@@ -760,6 +762,18 @@ TABLE 작성
   - TABLE 이름 대소문자 구분 !!
   - SYSDATE는 함수로 사용한다.
 
+### Maria DB
+
+1. Query 문 새로작성
+   - DDL
+   - DML - squence
+2. Spring MVC
+   - MariaDB JDBC 설치
+     - maven
+   - Spring 환경설정
+3. Mybatis Mapper 작업
+   - XML
+
 
 
 
@@ -994,28 +1008,86 @@ Edit virtual machine setting에서 새로운 하드디스크 를 추가
 
 
 
+RAID 1 / RAID 5 복구 (ADD)
+
+- ```
+  mdadm /dev/md1 --add /dev/sdg1
+  ```
+
+- 
 
 
 
 
 
+LVM (Logical Volume Manager)
 
-### Maria DB
-
-1. Query 문 새로작성
-   - DDL
-   - DML - squence
-
-2. Spring MVC
-   - MariaDB JDBC 설치
-     - maven
-   - Spring 환경설정
-3. Mybatis Mapper 작업
-   - XML
+- 두개를 붙여서 여러개 만들기 가능
+  - ex) 사용자에게 dir를 할당할 수 있음.
 
 
 
+- 생성 절차
 
+  1. fdisk 설정 
 
+     - Type of Partition = Linux LVM
 
+     - Hex Code = 8e
 
+  2. 물리적 볼륨 생성
+
+     - ```
+       pvcreate /dev/sdb1
+       pvcreate /dev/sdc1
+       ```
+
+  3. 물리적 볼륨 하나로 묶기
+
+     - ```
+       vgcreate myVG /dev/sdb1 /dev/sdc1
+       ```
+
+  4. vgdisplay로 상태확인
+
+  5.  볼륨 그룹의 파티션 나누기
+
+     - ```
+       lvcreate --size 1G --name myLG1 myVG
+       lvcreate --size 3G --name myLG2 myVG
+       lvcreate --extents 100%FREE --name myLG3 myVG
+       ```
+
+     - 마지막줄은 용량이 정확하게 나뉘어지지 않기 때문에 나머지를 다 myLG3로 넣으라는 뜻임
+
+  6. 디바이스 포멧
+
+     - ```
+       mkfs.ext4 /dev/myVG/myLG1
+       mkfs.ext4 /dev/myVG/myLG2
+       mkfs.ext4 /dev/myVG/myLG3
+       ```
+
+  7. 마운트 할 디렉토리 생성 및 마운트
+
+     - ```
+       mkdir /lvm1
+       mkdir /lvm2
+       mkdir /lvm3
+       ```
+
+     - ```
+       mount /dev/myVG/myLG1 /lvm1
+       mount /dev/myVG/myLG2 /lvm2
+       mount /dev/myVG/myLG2 /lvm3
+       ```
+
+     - vi /etc/fstab 에서 설정
+
+     - ```
+       /dev/myVG/myLG1 /lvm1 ext4 defaults 1 2
+       /dev/myVG/myLG2 /lvm2 ext4 defaults 1 2
+       /dev/myVG/myLG3 /lvm3 ext4 defaults 1 2
+       ```
+
+       
