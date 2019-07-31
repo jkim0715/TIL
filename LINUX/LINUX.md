@@ -1090,4 +1090,117 @@ LVM (Logical Volume Manager)
        /dev/myVG/myLG3 /lvm3 ext4 defaults 1 2
        ```
 
-       
+
+
+
+### 최소설치 모드
+
+- 텍스트 모드로 부팅.  UI가 없음.
+
+- 여러가지 tool을 yum으로 다운로드 받아야 함.
+
+  - ```
+    yum -y install wget
+    yum -y install 
+    ```
+
+
+
+
+
+
+
+### 셸 스크립트
+
+커널을 통해서 하드웨어를 조종.
+
+커널에서 HW에 있는 내용을 조회 할 수 있음.
+
+이런 커널을 명령을 전달하는 부분이 셸.
+
+CentOS 
+
+- bash shell 사용. ( 가장 최신 버전임)
+
+
+
+bash shell
+
+- Alias 기능 (명령어 단축 기능)
+- History
+- 연산
+- Job Control
+- 자동 이름 완성
+- 프롬프트 기능
+- 명령 편집기능.
+
+
+
+명령어
+
+- echo
+  - 자바로 치면 sysout
+  - ex)  echo $JAVA_HOME
+- printenv
+  - 환경정보 보기
+
+
+
+셸 스크립트 프로그래밍 (script language)
+
+```
+mkdir shell
+cd shell 
+
+```
+
+
+
+Shell Script에서 숫자도 모조리 다 String이다.
+
+```
+#!/bin/sh
+echo "Input number..?"
+read v1 v2
+echo "Input number is " $v1 $v2
+echo "Input number is $v1 $v2"
+exit 0
+```
+
+- $v1은 자바 스크립트의 이엘 변수랑 비슷하다. "" 안에서도 변수값을 가짐
+
+
+
+연산
+
+Input 받기 
+
+1. read 사용
+
+   - ```
+     read v1
+     read v2
+     sum1=`expr $v1 + $v2`
+     ```
+
+   - equal(=) 부호는 양옆에 붙여서 쓴다.
+
+   - 연산은 맨 앞과 끝에 `를 붙이고  앞에 expr를 쓴다.
+
+   - 괄호 (  ) 및 * 연산 같은경우 \ 를 붙여서 다른 기호와 구별해준다
+
+2.  parameter 사용
+
+   - ```
+     para3.sh /root sh /shfile
+     
+     $0 은 para3.sh 
+     $1 /root
+     $2 sh
+     $3 /shfile
+     
+     이런식으로 감
+     
+     ```
+
+   - 
