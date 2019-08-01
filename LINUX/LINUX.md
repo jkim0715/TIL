@@ -68,7 +68,9 @@ CentOS 설정
    - cd /etc/yum.repos.d/
    - mv CentOS-Base.repo CentOs-Base.repo.bak
    - wget http://download.hanbit.co.kr/centos/7/CentOS-Base.repo
-   - rm *.repo~
+   - chmod 644 *
+   - rm -f *.repo~
+   - yum clean all
 
    
 
@@ -462,9 +464,11 @@ RPM
     export JAVA_HOME
     CLASSPATH=$JAVA_HOME/lib
     export CLASSPATH
-    PATH=.:JAVA_HOME/bin:$PATH
+    TOMCAT_HOME=/etc/tomcat
+    export TOMCAT_HOME
+PATH=.:JAVA_HOME/bin:$TOMCAT_HOME/bin:$PATH
     ```
-
+    
     
 
 
@@ -1191,7 +1195,7 @@ Input 받기
 
 2.  parameter 사용
 
-   - ```
+   - ```bash
      para3.sh /root sh /shfile
      
      $0 은 para3.sh 
@@ -1203,4 +1207,145 @@ Input 받기
      
      ```
 
-   - 
+   - ```bash
+     #!/bin/sh
+     find $1 -name "*.$2" -exec cp {} $3 \;
+     exit 0
+     ```
+
+반복문
+
+for
+
+while
+
+- while [ 1 ]  
+
+  - 항상 참이라는 뜻.
+
+- ```bash
+  while [ 1 ]
+  do
+  내용
+  done
+  ```
+
+- 
+
+
+
+
+
+사용자 정의 함수 
+
+항상 위에다가 선언하고 사용
+
+- 
+
+  ```bash
+  #!/bin/sh
+  startTomcat() {
+  	echo "Start Tomcat .."
+  	return
+  }
+  
+  stopTomcat() {
+  	echo "Stop Tomcat .."
+  	return
+  }
+  ```
+
+- 사용시 함수 이름만 입력하면 됨.
+
+함수의 파라미터 사용
+
+- ```bash
+  #!/bin/sh
+  hap() {
+   echo `expr $1 + $2` 
+  }
+  echo "10 + 20을 실행 하시오"
+  hap 10 20 
+  exit 0
+  ```
+
+  
+
+eval
+
+- String을 Script화 시켜서 실행 즉 명령문으로 인식하여 실행한다.
+
+- ```bash
+  str="ls -l anaconda-ks.cfg"
+  echo $str
+  eval $str
+  ```
+
+- 
+
+
+
+export
+
+- 외부 변수로 선언한다. 즉 변수를 다른 프로그램에서도 사용할 수 있다.
+
+
+
+
+
+Set과 $(명령어)
+
+- 리눅스 명령어를 결과로 사용하려면 '$(명령어)' 형식을 사용해야 함. 
+
+  - ```bash
+    echo "오늘 날짜는 $(date) 입니다."
+    ```
+
+- 결과를 파라미터로 사용하려면 set 명령어와 함께 사용한다.
+
+  - ```bash
+    set $(date)
+    echo "오늘은 $4 요일 입니다"
+    ```
+
+  - ```
+    오늘 날짜는 2019.08.01 (목) 10:53:023 KST 입니다
+    오늘은 목 요일 입니다.
+    ```
+
+
+
+shell programming 을 하는 이유
+
+- 현업에서 직접 작성하는건  심플한거 몇개 짤 수도 있는데 
+- 기존에 있던 프로그램을 이해하고 수정하는 일이 더 많음
+- 개발자들에게는 필수
+
+환경설정 파일 하나 만들기
+
+- envset.sh
+
+  1.  jdk 설치
+
+     - /etc/jdk1.8
+     - /usr/bin/java softlink
+
+  2.  tomcat 설치 
+
+     /etc/tomcat
+
+     /usr/bin/startcat softlink
+
+     /user/bin/stopcat softlink
+
+  3.  eclipse 설치
+
+     /etc/eclipse
+
+     /usr/bin/eclipse softlink
+
+     
+
+     메뉴를
+
+     
