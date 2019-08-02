@@ -596,8 +596,9 @@ rdate -s time.bora.net
   - ls -l
   - yum -y localinstall oracle*
 
-- service oracle-xe configure  또는 /etc/init.d/oracle-xe configure 를 입력해 환경설정
+- ###### 오라클 환경설정
 
+  - service oracle-xe configure  또는 /etc/init.d/oracle-xe configure 를 입력해 환경설정
   - Specify the HTTP ~~Application Express (8080) :
   - Specify the port ~~ database listner (1521) :
   - Specify password ~ initial cofiguration: 암호입력
@@ -848,7 +849,7 @@ VMware 는 두가지 종류의 장치 사용가능
 
 
 
-RAID & LVM
+### RAID & LVM
 
 여러 하드디스크를 하나의 하드디스크 처럼 사용할 수 있게 만들 수 있음.
 
@@ -858,7 +859,7 @@ RAID & LVM
 
 
 
-RAID 종류
+#### RAID 종류
 
 - linear
   - 두개 하드디스크 사용 하나 꽉차면 다른하나 사용하기 시작
@@ -943,7 +944,7 @@ RAID5
 
   
 
-하드 고장내고 새로 추가하기
+##### 하드 고장내고 새로 추가하기
 
 Edit virtual machine setting 에서 remove Hardisk 로 고의적으로 하드디스크 제거하기
 
@@ -1024,7 +1025,7 @@ RAID 1 / RAID 5 복구 (ADD)
 
 
 
-LVM (Logical Volume Manager)
+#### LVM (Logical Volume Manager)
 
 - 두개를 붙여서 여러개 만들기 가능
   - ex) 사용자에게 dir를 할당할 수 있음.
@@ -1108,7 +1109,55 @@ LVM (Logical Volume Manager)
     yum -y install 
     ```
 
+파일 끌어오기 (SCP)
 
+- man scp 로 명령어 알아보기 
+
+- ```bash
+  scp -r root@192.168.111.112:/root/file/file /root/file
+  ```
+
+- -r dir
+
+- -rp  dir + 만든시간유지
+
+
+
+
+
+공유폴더 만들기
+
+- 바깥(Window)에다가 공유폴더 및 접근 아이디 비번 설정
+
+  - 바탕화면 shared 폴더 생성
+
+  - 속성-공유-Everyone(권한 읽기 쓰기) 추가-공유
+
+  - cmd에서 net 권한 사용자 계정 만들기
+
+    - ```bash
+      net user username password /add
+      ```
+
+- 리눅스 설정
+
+- ```bash
+  yum -y install cifs-utils
+  mkdir /test  
+  mount -t cifs //70.12.114.66/shared /root/test
+  ```
+
+- df 를 눌러서 잘 마운트 됐는지 확인
+
+ 방화벽 설정
+
+- ```bash
+  firewall-cmd --permanent --add-port=80/tcp
+  firewall-cmd --permanent --add-port=8080/tcp
+  firewall-cmd --permanent --add-port=1521/tcp
+  ```
+
+- 
 
 
 
@@ -1175,7 +1224,7 @@ exit 0
 
 
 
-연산
+#### 연산
 
 Input 받기 
 
@@ -1213,7 +1262,7 @@ Input 받기
      exit 0
      ```
 
-반복문
+#### 반복문
 
 for
 
@@ -1236,7 +1285,7 @@ while
 
 
 
-사용자 정의 함수 
+#### 사용자 정의 함수 
 
 항상 위에다가 선언하고 사용
 
@@ -1293,7 +1342,7 @@ export
 
 
 
-Set과 $(명령어)
+#### Set과 $(명령어)
 
 - 리눅스 명령어를 결과로 사용하려면 '$(명령어)' 형식을 사용해야 함. 
 
@@ -1321,7 +1370,13 @@ shell programming 을 하는 이유
 - 기존에 있던 프로그램을 이해하고 수정하는 일이 더 많음
 - 개발자들에게는 필수
 
-환경설정 파일 하나 만들기
+
+
+
+
+
+
+#### 환경설정 파일 (envset.sh)
 
 - envset.sh
 
@@ -1344,8 +1399,112 @@ shell programming 을 하는 이유
 
      /usr/bin/eclipse softlink
 
-     
+- envset.sh (IPADDR 등등 바꿔야 함)
 
-     메뉴를
+  - ```bash
+    #! /bin/sh
+    
+    installPath="/root/installfiles"
+    
+    installJDK(){
+        if [ -e $installPath/jdk-1.8.tar.gz ]
+        then
+            echo "Skip download JDK. JDK tar is existing in your direcetory."
+        else
+            wget -P $installPath http://70.12.114.60/MyFileServer/jdk-1.8.tar.gz
+        fi
+    
+        mkdir /etc/jdk1.8
+    
+        tar xvf $installPath/jdk-1.8.tar.gz -C /etc/jdk1.8 --strip-components 1
+        
+        ln -s /etc/jdk1.8/bin/java /usr/bin/java
+        
+        echo "END"
+    }
+    
+    
+    installTomcat(){
+        if [ -e $installPath/tomcat.tar.gz ]
+        then
+            echo "Skip download tomcat. Tomcat tar is existing in your direcetory."
+        else
+            wget -P $installPath http://70.12.114.60/MyFileServer/tomcat.tar.gz
+        fi
+    
+        if [ -e $installPath/tomcat ]
+        then
+            echo "Downloading files at $installPath/tomcat"
+        else
+            mkdir $installPath/tomcat
+        fi
+    
+        tar xvf $installPath/tomcat.tar.gz -C $installPath/tomcat --strip-components 1
+        
+        ln -s $installPath/tomcat/bin/startup.sh /usr/bin/startcat
+        ln -s $installPath/tomcat/bin/shutdown.sh /usr/bin/stopcat
+        
+        echo "Tomcat Installation END"
+    }
+    
+    
+    ## Preparing Download
+    if [ -e $installPath ]
+    then
+        echo "Downloading files at $installPath"
+    else
+        mkdir $installPath
+    fi
+    
+    if [ -e /etc/jdk1.8 ]
+    then
+        echo "JDK 1.8 exists already. Want to delete and reinstall it? (y/n)"
+        read cmd
+        case $cmd in
+            y)
+                echo "Start reinstallation JDK-1.8"
+                
+                # remove softlink if exsists
+                if [ -e /usr/bin/java ]
+                then
+                    rm /usr/bin/java
+                fi
+    
+                rm -rf /etc/jdk1.8
+                echo "Removed existing JDK"
+    
+                installJDK;;
+            n)
+                echo "Cancel installation"
+                break;;
+        esac
+    else
+        echo "Start installation JDK-1.8"
+        installJDK
+    fi
+    
+    ## Tomcat Install
+    if [ -e $installPath/tomcat ]
+    then
+        echo "Tomcat-9.0.22 exists already. Want to delete and reinstall it? (y/n)"
+        read cmd 
+        case $cmd in
+            y)
+                echo "Start reinstallation Tomcat"
+                rm -rf $installPath/tomcat
+                echo "Removed existing Tomcat"
+                installTomcat;;
+            n)
+                echo "Cancel installation Tomcat"
+                break;;
+        esac
+    else
+        echo "Start installation Tomcat"
+        installTomcat
+    fi
+    
+    exit 0
+    
+    ```
 
-     
+    
