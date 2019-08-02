@@ -171,8 +171,136 @@ public class LogAdvice {
 
 
 
+
+
 ## LOG
 
 1. web.xml 
+   
    - <Listener 부분 추가 >
+   
+   - 모든 request 가 들어올 때마다 Listener가 인지. ( log를 찍기 위함)
+   
+   - ```xml
+     	<listener>
+       	<listener-lass>
+             org.springframework.web.util.Log4jConfigListener
+         </listener-class>
+      	 </listener>
+       <context-param>
+       	<param-name>log4jConfigLocation</param-name>
+       	<param-value>/WEB-INF/config/log4j.properties</param-value>
+       </context-param>
+     ```
+   
+   - WEB-INF - config 밑에 log4j.properties 복사해서 붙여넣기 (제공된 smvc3 폴더 이용)
+   
+     - ```properties
+       log4j.logger.user = DEBUG, console, user
+       log4j.logger.work = DEBUG, console, work
+       log4j.logger.data = DEBUG, console, data
+       ```
+   
+       - user, work, data는 임의로 저장.
+       - 디버그를 할거고 콘솔에 찍어볼거임 
+       - 마지막으로 로그을 파일로 저장할 거임 (user , work , data)
+   
+     - ```properties
+       # user
+       log4j.appender.user.Threadhold=DEBUG
+       log4j.appender.user = org.apache.log4j.DailyRollingFileAppender 
+       log4j.appender.user.DatePattern = '.'yyyy-MM-dd
+       log4j.appender.user.layout = org.apache.log4j.PatternLayout 
+       log4j.appender.user.layout.ConversionPattern = %-5p %L [%d] - %m%n
+       log4j.appender.user.File = c:/logs/user.log   
+       ```
+   
+       - 년월일 찍어볼거고 패턴준거고 저 경로에 파일 저장할거임
+       - Linux에서는 경로가 달라져야 함.
+   
+   - Loggers.java
+   
+     - ```java
+       public class Loggers {
+       	private Logger work_log = 
+       			Logger.getLogger("work"); 
+       	private Logger user_log = 
+       			Logger.getLogger("user"); 
+       	private Logger data_log = 
+       			Logger.getLogger("data"); 
+       ```
+   
+       - 어떤 로그를 쓸건지 결정
 
+
+
+
+
+EXCEPTION 처리 
+
+Spring MVC 에서 에러가 나면 에러처리 화면으로 보낼 거임.
+
+1. web.xml
+
+   - ```xml
+       <listener>
+       	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+       </listener>
+       
+       <context-param>
+       	<param-name>contextConfigLocation</param-name>
+       	<param-value>/WEB-INF/config/springex.xml</param-value>
+       </context-param>
+     ```
+
+     -  요청이 들어올 때 springex.xml 이라는 환경설정 파일을 메모리에 올릴 거다
+
+2. WEB-INF>config 에 springx.xml 추가 
+
+   - ```xml
+     <bean id="exeptionResolver" 
+      	class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+      		<property name="exceptionMappings">
+      			<props>
+      				<prop key="java.lang.ArithmeticException">
+      					error
+      				</prop>
+      			</props>
+      		</property>
+      	</bean>
+     ```
+
+     - 일부로 ArithmeticException을 만들어 놨음 ( int a = a/0; )
+
+3. 
+
+
+
+
+
+문제가 있을때 maven folder 삭제하고 다시 설치 
+
+- C:\Users\student\.m2 에 repository 폴더 삭제 후 project 를 다시 Maven update
+- porm.xml 에서 logging 쪽에 runtime 제거 하기 ( Import가 잘 안돼는 경우)
+
+
+
+LOG Summary
+
+--Log4j (Log for java)
+
+1.  web.xml
+
+2.  log4j.properties
+
+3.  Logger.java
+
+   -AOP
+
+
+
+--Exception
+
+1. web.xml
+2. spring.xml
+3. error.jsp
