@@ -53,12 +53,18 @@ CentOS 설정
 
 1. YUM 명령어를 이용하여 소프트웨어 업데이트를 할때도 버전에 맞는 소프트웨어만 다운로드하도록 설정
    - cd /etc/yum.repos.d/
+   
    - ls
+   
    - gedit CentOS-Base.repo
      - 최소모드로 LINUX를 설치 했을 경우 wget이 없기 떄문에 먼저 설치해야함
+     
      - yum -y install wget* 로 설치
+     
    - released updates 부분 삭제
+   
    - gedit CentOS-Sources.repo
+   
    - released updates 삭제
 
 
