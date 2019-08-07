@@ -723,7 +723,6 @@ foreground
 - ADMIN 계정 접속
   - mysql -u root -p
     - 비밀번호 입력.
-- 
 
 
 
@@ -773,7 +772,18 @@ TABLE 작성
   - TABLE 이름 대소문자 구분 !!
   - SYSDATE는 함수로 사용한다.
 
-### Maria DB
+###### Maria DB  완전삭제
+
+- ```bash
+  rm -rf /usr/lib/mysql
+  yum erase mariadb*
+  yum remove mariadb
+  yum remove MariaDB-common
+  ```
+
+  
+
+###### Maria DB workshop
 
 1. Query 문 새로작성
    - DDL
@@ -787,8 +797,6 @@ TABLE 작성
 
 
 
-
-
 ##### 하드디스크 추가하기 
 
 VMware 는 두가지 종류의 장치 사용가능
@@ -796,8 +804,6 @@ VMware 는 두가지 종류의 장치 사용가능
 1. IDE(PC)
    - 백업 
 2. SCSI (Server)
-
-
 
 과정
 

@@ -287,143 +287,378 @@ MapReduce가 어렵고 빡세기 때문에 현업에서 더 많이 사용하는 
 
 
 
-### 완전분산모드 (서버 4대)
+### 완전분산모드 (서버 4대 / 가상 IP 이용)
 
-- HADOOP1  ~4 준비
+HADOOP1  ~4 준비
 
+- ssh 
 
+  Public Key -> Authorized_Keys 배포
 
-1. ssh 
+  ```bash
+  ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+  cd .ssh
+  cat id_dsa.pub > authorized_keys
+  scp authorized_keys root@hadoop2:~/.ssh/authorized_keys
+  scp authorized_keys root@hadoop3:~/.ssh/authorized_keys
+  scp authorized_keys root@hadoop4:~/.ssh/authorized_keys
+  
+  ssh root@hadoop2 cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+  ```
 
-   Public Key -> Authorized_Keys 배포
+  비밀번호 없이 ssh로 접근 가능.
 
-   ```bash
-   ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
-   cd .ssh
-   cat id_dsa.pub > authorized_keys
-   scp authorized_keys root@hadoop2:~/.ssh/authorized_keys
-   scp authorized_keys root@hadoop3:~/.ssh/authorized_keys
-   scp authorized_keys root@hadoop4:~/.ssh/authorized_keys
-   
-   ssh root@hadoop2 cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
-   ```
+- 서버 역할 나누기 및 하둡 환경설정
 
-   비밀번호 없이 ssh로 접근 가능.
+  - etc/hadoop-1.2.1/conf
 
-2. 서버 역할 나누기 및 하둡 환경설정
+  - masters
 
-   - etc/hadoop-1.2.1/conf
+    ```bash
+    hadoop2
+    ```
 
-   - masters
+  - slaves
 
-     ```bash
-     hadoop2
-     ```
+    ```bash
+    hadoop2
+    hadoop3
+    hadoop4
+    ```
 
-   - slaves
+  - core-site.xml
 
-     ```bash
-     hadoop2
-     hadoop3
-     hadoop4
-     ```
-
-   - core-site.xml
-
-     ```bash
-     <configuration>
+    ```bash
+    <configuration>
+     <property>
+        <name>fs.default.name</name>
+        <value>hdfs://192.168.111.201:9000</value>
+      </property>
       <property>
-         <name>fs.default.name</name>
-         <value>hdfs://192.168.111.201:9000</value>
-       </property>
-       <property>
-         <name>dfs.tmp.dir</name>
-         <value>/etc/hadoop-1.2.1/tmp</value>
-       </property> 
-     </configuration>
-     
-     ```
+        <name>dfs.tmp.dir</name>
+        <value>/etc/hadoop-1.2.1/tmp</value>
+      </property> 
+    </configuration>
+    
+    ```
 
-   - hdfs-site.xml
+  - hdfs-site.xml
 
-     ```bash
-     <configuration>
-       <property>
-         <name>dfs.permissions</name>
-         <value>false</value>
-       </property>
-       <property>
-         <name>dfs.replication</name>
-         <value>2ㅗ</value>
-       </property>
-       <property>
-         <name>dfs.http.address</name>
-         <value>192.168.111.201:50070</value>
-       </property>
-       <property>
-         <name>dfs.secondary.http.address</name>
-         <value>192.168.111.202:50090</value>
-       </property>
-       <property>
-         <name>dfs.name.dir</name>
-         <value>/etc/hadoop-1.2.1/name</value>
-       </property>
-       <property>
-         <name>dfs.data.dir</name>
-         <value>/etc/hadoop-1.2.1/data</value>
-       </property> 
-     </configuration>
-     
-     ```
+    ```bash
+    <configuration>
+      <property>
+        <name>dfs.permissions</name>
+        <value>false</value>
+      </property>
+      <property>
+        <name>dfs.replication</name>
+        <value>2ㅗ</value>
+      </property>
+      <property>
+        <name>dfs.http.address</name>
+        <value>192.168.111.201:50070</value>
+      </property>
+      <property>
+        <name>dfs.secondary.http.address</name>
+        <value>192.168.111.202:50090</value>
+      </property>
+      <property>
+        <name>dfs.name.dir</name>
+        <value>/etc/hadoop-1.2.1/name</value>
+      </property>
+      <property>
+        <name>dfs.data.dir</name>
+        <value>/etc/hadoop-1.2.1/data</value>
+      </property> 
+    </configuration>
+    
+    ```
 
-   - mapred-site.xml
+  - mapred-site.xml
 
-     ```bash
-     <configuration>
-       <property>
-        <name>mapred.job.tracker</name>
-        <value>192.168.111.201:9001</value>
-       </property> 
-     </configuration>
-     
-     ```
+    ```bash
+    <configuration>
+      <property>
+       <name>mapred.job.tracker</name>
+       <value>192.168.111.201:9001</value>
+      </property> 
+    </configuration>
+    
+    ```
 
-   - hadoop-env.sh
+  - hadoop-env.sh
 
-     ```bash
-     export JAVA_HOME=/etc/jdk1.8
-     export HADOOP_HOME_WARN_SUPRESS="TRUE"
-     ```
+    ```bash
+    export JAVA_HOME=/etc/jdk1.8
+    export HADOOP_HOME_WARN_SUPRESS="TRUE"
+    ```
 
-     
+    
 
-3. 하둡 설정한거 압축 및 배포 후 압축풀기
+- 하둡 설정한거 압축 및 배포 후 압축풀기
+
+  ```bash
+  tar cvfz hadoop.tar.gz hadoop-1.2.1
+  
+  hadoop2,3,4동일하게 진행
+  scp hadoop.tar.gz root@hadoop2:/etc
+  scp /etc/profile root@hadoop2:/etc
+  sco /etc/bashrc root@hadoop2:/etc
+  ```
+
+  압축풀기
+
+  ```bash
+  ssh root@hadoop2 tar xvf /etc/hadoop.jar.gz /etc
+  ssh root@hadoop3 tar xvf /etc/hadoop.jar.gz /etc
+  ssh root@hadoop4 tar xvf /etc/hadoop.jar.gz /etc
+  혹은 한번에 가능
+  ssh root@hadoop2 "cd /etc;tar xvfz hadoop.tar.gz;rm -rf hadoop.tar.gz"
+  ```
+
+  포멧 
+
+  ```bash
+  hadoop namenode -formant
+  ```
+
+  
+
+
+
+### HDFS
+
+#### HDFS 명령어 (난중에 정리 p 80쪽)
+
+Hadoop fs -cmd [args] 치면 다나옴 쳐서 보셈.
+
+HDFS에 폴더 생성 및 조회
+
+```bash
+hadoop fs -mkdir mydir 폴더 생성
+hadoop fs -ls  현재 디렉토리 파일 리스트
+hadoop fs -ls <PATH> PATH에 있는 파일 리스트 
+hadoop fs -lsr 현재 디렉토리의 하위 디렉토리까지 풀어서 보여줌
+```
+
+파일 용량 확인
+
+```bash
+hadoop fs -du <path>  지정한 디렉터리나 파일의 사용량을 확인 (바이트단위)
+hadoop fs -dus <path> -du는 파일별 용량 -dus는 디렉터리 용량합계
+```
+
+파일 내용보기
+
+```bash
+hadoop fs -cat <파일> 파일의 내용출력
+hadoop fs -text <파일> -cat은 텍스트 파일만 가능하지만 -text는 zip파일도 가능
+```
+
+파일 복사 
+
+```bash
+hadoop fs -put / -get / -getmerge / -cp / -copyFromLocal / -copyToLocal
+-put : 지정한 로컬 파일 시스템의 파일 및 디렉터리를 목적지 경로로 복사
+-copyFromLocal : -put이랑 동일한 기능
+-get : HDFS에 저장된 파일을 로컬 파일시스템으로 복사
+-getmerge : 지정한 경로에 있는 모든 파일의 내용을 합친 후 로컬 파일 시스템에 하나의 파일로 복사
+```
+
+
+
+파일삭제
+
+```bash
+hadoop fs -rmr /mydir
+```
+
+
+
+휴지통 비우기 
+
+```bash
+hadoop fs -expunge 
+```
+
+
+
+
+
+#### 맵 리듀스 (Map Reduce)
+
+Map + Reduce
+
+구성 : 클라이언트 + 잡트래커 + 태스크트래커 
+
+
+
+
+
+### 하이브
+
+#### 사전준비 (Mysql)
+
+1. Mysql 설치 및 root 아디 만들기 (LINUX 참고)
+
+2. root로 로그인해서 기본환경 세팅
 
    ```bash
-   tar cvfz hadoop.tar.gz hadoop-1.2.1
+   mysqladmin -u root password '111111'
+   mysql -u root -p mysql
    
-   hadoop2,3,4동일하게 진행
-   scp hadoop.tar.gz root@hadoop2:/etc
-   scp /etc/profile root@hadoop2:/etc
-   sco /etc/bashrc root@hadoop2:/etc
+   grant all privileges on *.* to 'hive'@'localhost' identified by '111111';
+   flush privileges;
+   
+   create database hive_db;
+   grant all privileges on hive_db.* to 'hive'@'%' identified by '111111' with grant option;
+   grant all privileges on hive_db.* to 'hive'@'localhost' identified by '111111' with grant option;
+   grant all privileges on hive_db.* to 'hive'@'%' identified by '111111' with grant option;
+   flush privileges;
+   commit;
    ```
 
-   압축풀기
+   
+
+3. 하둡 1이면 버전 1.0.1  / 하둡 2면 최신 ( 2.0.0 )
+
+#### 설치
+
+```bash
+wget http://archive.apache.org/dist/hive/apache-hive-1.0.1-bin.tar
+```
+
+이거 안되면 웹에서 다운로드 후 가져오기
+
+- 압축 풀고 이름 hive로 바꿔서 /etc 밑에 넣기 
+
+- /etc/profile에 경로 설정
+
+  - ```bash
+    export HIVE_HOME=/usr/local/hive
+    export HADOOP_HOME=/usr/local/hadoop
+    PATH=$PATH:$HOME/bin:$HADOOP_HOME/bin:$HIVE_HOME/bin:
+    ```
+
+    
+
+- /etc/hive/conf 에 hive-site.xml 만들기
+
+  ```bash
+  <?xml version="1.0"?>
+  <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+  <configuration>
+      <property>
+          <name>hive.metastore.local</name>
+          <value>true</value>
+          <description>controls whether to connect to remove metastore server or open a new metastore server in Hive Client JVM</description>
+      </property>
+      <property>
+          <name>javax.jdo.option.ConnectionURL</name>
+          <value>jdbc:mariadb://localhost:3306/hive_db?createDatabaseIfNotExist=true</value>
+          <description>JDBC connect string for a JDBC metastore</description>
+      </property>
+      <property>
+          <name>javax.jdo.option.ConnectionDriverName</name>
+          <value>org.mariadb.jdbc.Driver</value>
+          <description>Driver class name for a JDBC metastore</description>
+      </property>
+      <property>
+          <name>javax.jdo.option.ConnectionUserName</name>
+          <value>hive</value>
+          <description>username to use against metastore database</description>
+      </property>
+      <property>
+          <name>javax.jdo.option.ConnectionPassword</name>
+          <value>111111</value>
+          <description>password to use against metastore database</description>
+      </property>
+  </configuration>
+  
+  ```
+
+
+
+#### 하이브랑 MariaDB 연동하기 
+
+하이브에 Maria JDBC lib 넣기.
+
+```bash
+cp mariadb-java-client-1.3.5-jar /etc/hive/lib
+```
+
+주의할 점 : MariaDB java Client 버전이 다르면 동작이 안할 수 있음 !!. (1.3.5 사용 할 것)
+
+#### HDFS에 하이브가 사용할 파일 만들어 놓기  및 권한 부여 
+
+1. 하이브 실행하기전에 HDFS 키고 MaraDB 준비 
+
+2.  하이브가 사용할 폴더를 만들거임 tmp
 
    ```bash
-   ssh root@hadoop2 tar xvf /etc/hadoop.jar.gz /etc
-   ssh root@hadoop3 tar xvf /etc/hadoop.jar.gz /etc
-   ssh root@hadoop4 tar xvf /etc/hadoop.jar.gz /etc
-   혹은 한번에 가능
-   ssh root@hadoop2 "cd /etc;tar xvfz hadoop.tar.gz;rm -rf hadoop.tar.gz"
+   hadoop dfs -mkdir /tmp
+   hadoop dfs -mkdir /user/hive/warehouse
+   hadoop dfs -chmod g+w /tmp
+   hadoop dfs -chmod g+w /user/hive/warehouse
    ```
 
-   포멧 
+   
+
+3. Hive 실행
 
    ```bash
-   hadoop namenode -formant
+   hive
    ```
 
-   문제 발생시 
+   - 명령어를 실행하면 한번 에러나면서 /tmp 밑에 hive 폴더가 생김 (권한이 없어서 Hive 실행이 안되는거임)
 
-   /name /data /tmp 삭제 후  format 및 실행
+   - 하둡 제어창에서 확인(50070)
+
+   
+
+4. tmp/hive폴더에 권한 부여 후 하이브 재실행 하면 동작됨
+
+   ```bash
+   hadoop dfs -chmod 777 /tmp/hive
+   
+   hive
+   ```
+
+##### Hive에 데이터 테이블 작성 및 파일 업로드
+
+- hdi.txt 파일 준비 (data)
+
+- hive에서 hdi.txt 파일에 있는 데이터 형식 mysql에 테이블로 정의하기 (create table HDI)
+
+  ```bash
+  hive> CREATE TABLE HDI(id INT, country STRING, hdi FLOAT, lifeex INT, mysch INT, 
+  
+  eysch INT, gni INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS 
+  
+  TEXTFILE;
+  ```
+
+- 하이브에서 hid.txt 를 HDFS 에 올리기 (load)
+
+  ```bash
+  hive>load data local inpath '/root/hdi.txt' into table HDI;
+  ```
+
+- 확인
+
+  ```bash
+  hive> select * from hdi limit 5;
+  ```
+
+  
+
+### 문제 발생시  대처
+
+1. 하둡이 실행이 되지 않을 때
+
+   - /etc/hadoop-1.2.1
+
+   - name /data /tmp 삭제 후  format 및 실행
+
+2. 윈도우에서 Hadoop관리창이 안열릴 경우
+   - c\Windows\System32\drivers\etc 에 들어가서  hosts파일 수정 ( 하둡서버 호스트네임 추가)
