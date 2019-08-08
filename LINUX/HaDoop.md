@@ -130,7 +130,7 @@ DB 서버 만들기
     - Public Key  를 배포키로 만들기.
 
     ```bash
-    cat id-dsa.pub >>authorized_keys
+    cat id_dsa.pub >>authorized_keys
     ```
 
     - 하다가 오류나면 .ssh 폴더를 삭제 후 다시 진행.
@@ -352,7 +352,7 @@ HADOOP1  ~4 준비
       </property>
       <property>
         <name>dfs.replication</name>
-        <value>2ㅗ</value>
+        <value>2</value>
       </property>
       <property>
         <name>dfs.http.address</name>
@@ -563,6 +563,10 @@ wget http://archive.apache.org/dist/hive/apache-hive-1.0.1-bin.tar
           <value>org.mariadb.jdbc.Driver</value>
           <description>Driver class name for a JDBC metastore</description>
       </property>
+        <property>
+          <name>hive.cli.print.header</name>
+          <value>true</value>
+      </property>
       <property>
           <name>javax.jdo.option.ConnectionUserName</name>
           <value>hive</value>
@@ -650,7 +654,64 @@ cp mariadb-java-client-1.3.5-jar /etc/hive/lib
   hive> select * from hdi limit 5;
   ```
 
+
+
+
+### 하이브QL
+
+http://stat-computing.org/dataexpo/2009
+
+
+
+
+
+### 하이브 자바 연동
+
+- 라이브러리 파일 준비
+  - hivelibs.zip
+
+- 하이브 서버 java app응답 대기
+
+  ```bash
+  hive --service hiveserver2
+  ```
+
+  이렇게 대기상태를 만들어 놔야지 java application에서 돌아감
+
+- Java App준비하기
+
+  - java project 만들고 add External jar file 해서 준비했던 library 넣기
+
+  ```java
+  import java.sql.*;
   
+  public class Hive {
+  	public static void main(String[] args) throws Exception {
+  
+  	Class.forName("org.apache.hive.jdbc.HiveDriver");
+  
+  	Connection conn = DriverManager.getConnection("jdbc:hive2://70.12.114.222:10000/default", "root", "111111");   //root 랑 111111 은 비워둬도 됨
+        
+  	Statement stmt = conn.createStatement();
+  
+  	ResultSet rs = stmt.executeQuery("SELECT * FROM hdi");
+  
+  	while (rs.next()) {
+  		System.out.println(rs.getString(1));
+  	}
+  	conn.close();
+       System.out.println("Success....");
+  	}
+  }
+  ```
+
+  
+
+
+
+
+
+
 
 ### 문제 발생시  대처
 
@@ -662,3 +723,6 @@ cp mariadb-java-client-1.3.5-jar /etc/hive/lib
 
 2. 윈도우에서 Hadoop관리창이 안열릴 경우
    - c\Windows\System32\drivers\etc 에 들어가서  hosts파일 수정 ( 하둡서버 호스트네임 추가)
+3.  하둡 분산 설치시 host name에는 특수문자 넣지 말 것.
+
+4. 하이브 연동 java App이 작동안할 경우 hive --service hiveserver2 준비 되어 있는지 확인
