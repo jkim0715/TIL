@@ -648,7 +648,7 @@ cp mariadb-java-client-1.3.5-jar /etc/hive/lib
   hive>load data local inpath '/root/hdi.txt' into table HDI;
   ```
 
-- 확인
+- ​    확인
 
   ```bash
   hive> select * from hdi limit 5;
