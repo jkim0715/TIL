@@ -43,4 +43,38 @@ Queue (FIFO)
   }
   ```
 
-- 
+- Ex) Bridge w/ trucks
+
+  ```java
+  import java.util.LinkedList;
+  import java.util.Queue;
+  public class Truck {
+  
+  	public int solution(int bridge_length, int weight, int[] truck_weights) {
+          int answer = 0;
+          int sum = 0;
+          Queue queue = new LinkedList<>();
+          
+          // initialise
+          for(int i = 0; i < bridge_length; i++)
+          	queue.add(0);
+  
+          for(int i = 0; i < truck_weights.length; i++) {
+          	sum -= queue.poll();
+  
+          	if(sum + truck_weights[i] <= weight) { 
+          		queue.add(truck_weights[i]);
+          		sum += truck_weights[i];
+          	}else {
+          		queue.add(0);
+          		i--;
+          	}
+          	answer++;
+          }
+          
+          return answer + bridge_length;
+      }
+  } 
+  ```
+
+  
