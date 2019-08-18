@@ -77,4 +77,42 @@ Queue (FIFO)
   } 
   ```
 
+
+- EX) Max Number
+
+  ```java
+  import java.util.*;
   
+  class Solution {
+      public String solution(int[] numbers) {
+          String answer = "";
+      int temp =0;
+          
+          PriorityQueue<String> queue1 = new PriorityQueue<String>(new Comparator<String>(){
+              @Override
+              public int compare(String o1, String o2){
+                  if(Integer.valueOf(o1+o2) > Integer.valueOf(o2+o1))
+                      return -1;
+                  else
+                      return 1;
+              }
+          });      
+          StringBuffer buffer =new StringBuffer();
+          for(int i=0; i<numbers.length; i++){
+              temp += numbers[i];
+              queue1.add(String.valueOf(numbers[i]));
+          }      
+          while(!queue1.isEmpty()){
+              String a = queue1.poll();
+              buffer.append(a);
+          }         
+          if(temp==0)return "0";
+          return buffer.toString();
+      }
+  }
+  ```
+
+  
+
+
+
