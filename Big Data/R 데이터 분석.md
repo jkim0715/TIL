@@ -345,6 +345,37 @@ View(df3)
 
 
 
+Aggregate
+
+```javascript
+st <- read.csv("student.csv",
+               header= TRUE,
+               stringsAsFactors = FALSE,
+               na.strings = "NA",
+               encoding = "EUC-KR"
+)
+
+#Select Students whose KO grade > 91
+st[st$KO >= 91 ,]
+
+
+#Select Students whose KO grade > 91 and also SI grade > 80
+#Make sure need to repeat name of Variables to give some conditions 
+st[st$KO >= 91 & st$SI > 80,]
+
+st$AVG <- st[,mean(c(3:6))]
+st$CLASS <- c(1,1,1,2,2,2,3,3)
+
+#sth like group by
+aggregate(data=st[st$KO>=90,], AVG~CLASS,mean)
+```
+
+
+
+
+
+
+
 ### 타입판별
 
 데이터를 처리하기 위해 여러 함수를 호출하다 보면 반환된 결과의 타입이 무엇인지 분명하지 않을 때가 많다. 이 경우 다음 함수들을 사용하여 데이터 타입을 손쉽게 판단할 수 있다.
@@ -1998,6 +2029,26 @@ class(result2)
 
 
 
+## 그래프 그리기(ggplot2)
+
+```javascript
+#패키지 인스톨
+install.pakages("ggplot2")
+
+#실행 
+g1() 
+```
+
+```javascript
+g1 <- function(){
+  library(ggplot2);
+  x <- c("a","a","b","c","e");
+  
+    #막대 그래프 생성
+    qplot(x);
+}
+```
+
 
 
 
@@ -2031,8 +2082,9 @@ R Programming
 # 오류
 
 1. csv 파일이 Rstudio내에서 꺠져서 보일때 (csv 파일 저장할때 ANSI 말고 UTF-8로 저장)
-   - 그냥 저장할때 엑셀파일 이용하거나 하셈
-
+   
+- 그냥 저장할때 엑셀파일 이용하거나 하셈
+   
 2. 잘라낸 데이터 타입이 Data Frame 일 경우 mean 연산이 안되므로 타입 캐스팅이 필요함.
 
 3. SQL문을 쓸때 컬럼명에 . 이포함되면 못읽을 수 있으니 바깥쪽을 single quatation, 컬럼명을 double quatation을 써서 처리
