@@ -648,8 +648,9 @@ http://stat-computing.org/dataexpo/2009
 ### 하이브 자바 연동
 
 - 라이브러리 파일 준비
-  - hivelibs.zip
-
+  
+- hivelibs.zip
+  
 - 하이브 서버 java app응답 대기
 
   ```bash

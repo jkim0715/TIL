@@ -158,7 +158,7 @@ R에서 데이터 타입의 기본은 벡터(Vector)
 
 Example)
 
-```javascript
+```R
 #배열 선언  score
 score <- c(100,90,80);  
 
@@ -261,7 +261,7 @@ print(ncol(ma))
 
 - data.frame : 데이터 프레임을 생성한다.
 
-```javascript
+```R
 df1 <- data.frame(x=c(1:5),y=c(5:9),z=c(10:14))
 print(df1)
 print(df1$x)
@@ -278,7 +278,7 @@ print(df2)
 
 - str : 임의의 R 객체의 내부 구조(structure)를 보인다.
 
-```javascript
+```R
 df1 <- data.frame(
   "lee" = c(90,99,89,87),
   "kim" = c(91,98,81,86),
@@ -313,7 +313,7 @@ df1$lee <- c(0,0,0,0)
 df1$hong <- c(100,100,100,100)
 ```
 
-```javascript
+```R
 df1 <- data.frame(
   a=c(1:4),
   b=c(5:8),
@@ -347,7 +347,7 @@ View(df3)
 
 Aggregate
 
-```javascript
+```R
 st <- read.csv("student.csv",
                header= TRUE,
                stringsAsFactors = FALSE,
@@ -368,6 +368,12 @@ st$CLASS <- c(1,1,1,2,2,2,3,3)
 
 #sth like group by
 aggregate(data=st[st$KO>=90,], AVG~CLASS,mean)
+
+--result
+  CLASS      AVG
+1     1 82.66667
+2     2 71.00000
+3     3 80.00000
 ```
 
 
@@ -552,7 +558,7 @@ R 프로그래밍은 다른 언어와 상당히 유사해 예시 코드를 참�
 
 조건문 if의 예를 살펴보자.
 
-```javascript
+```R
 > if ( TRUE ) {
 +    print("TRUE")
 +    print("hello")
@@ -568,7 +574,7 @@ R 프로그래밍은 다른 언어와 상당히 유사해 예시 코드를 참�
 
 ifelse( )를 사용하면 if 문을 다수의 데이터에 한 번에 적용하는 연산이 가능하다. 다음은 1, 2, 3, 4, 5에서 값이 짝수일 경우 “even”, 홀수일 경우 “odd”를 출력하는 예다.
 
-```javascript
+```R
 > x <- c(1, 2, 3, 4, 5)
 > ifelse(x %% 2 == 0, "even", "odd")
 [1] "odd" "even" "odd" "even" "odd"
@@ -596,7 +602,7 @@ R의 반복문에는 for, while, repeat 문이 있다. 다음은 이 세 가지 
 
 다음 코드에서 for 문은 변수 i가 주어진 벡터에 있는 1, 2, 3, …, 10을 차례로 출력한다.
 
-```javascript
+```R
 > for (i in 1:10) {
 +    print(i)
 + }
@@ -614,7 +620,7 @@ R의 반복문에는 for, while, repeat 문이 있다. 다음은 이 세 가지 
 
 다음 while 문은 1부터 10까지 숫자를 출력하기 위해 변수 i의 값을 10과 비교하면서 print( )하는 예다.
 
-```javascript
+```R
 > i <- 1
 > while (i <= 10) {
 +    print(i)
@@ -634,7 +640,7 @@ R의 반복문에는 for, while, repeat 문이 있다. 다음은 이 세 가지 
 
 while 문에서 next를 사용해 짝수만 출력해보자. 값이 짝수인지 확인하는 데는 나머지 연산자 %%를 사용했다.
 
-```javascript
+```R
 > i <- 0
 > while (i <= 9) {
 +    i <- i + 1
@@ -1490,13 +1496,27 @@ b.csv 파일에는 다음과 같이 헤더 행이 없다고 가정해보자.
  $ score: int 95 97 92
 ```
 
+### 엑셀 파일 입출력
+
+```R
+install.pakages("readxl")
+
+library(readxl)
+# you may set address manually
+st <- read_excel("st.xlsx")
+```
+
+
+
+
+
 
 
 ### 객체의 파일 입출력
 
 데이터를 다양한 알고리즘으로 장시간 처리한 뒤 파일에 저장해두면 나중에 같은 계산을 반복할 필요가 없어 효율적이다. 바이너리 파일로 R 객체를 저장하고 불러들이는 함수에는 save( ), load( )가 있다.
 
-```javascript
+```R
 v1 <- c(1:10)
 save(v1,file = "v1.dat")
 rm(list=ls())
@@ -1554,7 +1574,7 @@ character(0)
 
 rbind( )와 cbind( )는 각각 행 또는 컬럼 형태로 주어진 벡터, 행렬, 데이터 프레임을 합쳐서 결과로 행렬 또는 데이터 프레임을 만드는 데 사용한다. 이들 함수는 분리되어 저장된 데이터를 합치는 데 유용하게 사용할 수 있다.
 
-```javascript
+```R
 x <- data.frame(id=c(1, 2), name=c("a", "b"), stringsAsFactors=F)
 
 x$age <- c(20,30)
@@ -1999,13 +2019,13 @@ doBy가 데이터를 그룹별로 나눈 후 특정 계산을 적용하기 위�
 
 ## sqldf
 
-```javascript
+```R
 install.pakages("sqldf")
 ```
 
 메모리에 데이터를 올리고 sql문으로 분석 가능
 
-```javascript
+```R
 #titanic r08-1
 library(sqldf)
 tt <- read.csv("titanic.csv",
@@ -2031,7 +2051,7 @@ class(result2)
 
 ## 그래프 그리기(ggplot2)
 
-```javascript
+```R
 #패키지 인스톨
 install.pakages("ggplot2")
 
@@ -2039,7 +2059,7 @@ install.pakages("ggplot2")
 g1() 
 ```
 
-```javascript
+```R
 g1 <- function(){
   library(ggplot2);
   x <- c("a","a","b","c","e");
@@ -2048,6 +2068,418 @@ g1 <- function(){
     qplot(x);
 }
 ```
+
+
+
+### dplyr
+
+#### 변수명 바꾸기 (dplyr)
+
+```R
+install.pakages("dplyr")
+
+library(readxl)
+library(dplyr)
+# you may set address manually
+st <- read_excel("st.xlsx")
+summary(st)
+# 컬럼 명칭으로 데이터를 가져오는 일이 많기 때문에 컬럼명 저장은 중요함
+st2 <- rename(st,MA=MATH)
+
+```
+
+데이터 전처리(dplyr)
+
+```R
+library(dplyr)
+
+```
+
+
+
+### 파생변수 만들기 (조건문 함수)
+
+```R
+#Append col with other values under specific condition by using ifelse()  
+st2$LEVEL <- ifelse(st2$AVG >=90, "PASS","FAIL")
+
+     ID CLASS    MA   ENG   SCI   AVG LEVEL
+  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <chr>
+1     1     1    90    90    91  90.3 PASS 
+2     2     1    80    80    81  80.3 FAIL 
+3     3     2    70    70    71  70.3 FAIL 
+4     4     2   100   100    99  99.7 PASS 
+5     5     3    90    90    88  89.3 FAIL 
+
+#calculate mean grade per pass/fail
+aggregate(data=st2,AVG~LEVEL,mean)
+
+  LEVEL AVG
+1  FAIL  80
+2  PASS  95
+```
+
+
+
+## 텍스트 마이닝
+
+```R
+install.packages("rJava")
+install.packages("memoise")
+install.packages("KoNLP")
+install.packages("stringr")
+```
+
+```R
+library(KoNLP)
+library(dplyr)
+library(rJava)
+library(stringr)
+
+# bring texts
+txt <- readLines("hiphop.txt")
+
+#현재 문장안에서 특수문자를 공백으로 바꾸기
+txt <- str_replace_all(txt,"\\W"," ")
+
+#extract nouns from the txt 
+nouns <- extractNoun(txt)
+
+cnt <-table(unlist(nouns))
+
+#Data Frame으로 바꾸기 
+df_cnt <- as.data.frame(cnt,stringsAsFactors = F)
+colnames(df_cnt) <- c("word","freq")
+df_word <- filter(df_cnt, nchar(word)>=2)
+
+#가장많은 빈도수 찾기
+df_word <- df_word[order(df_word$freq,decreasing = T),]
+df_word <- head(df_word,20)
+
+```
+
+### 워드 클라우드
+
+```R
+install.packages("wordcloud")
+install.packages("RColorBrewer")
+```
+
+```R
+#WordCloud
+library(RColorBrewer)
+library(wordcloud)
+pal <- brewer.pal(8,"Dark2")
+set.seed(1234)
+
+
+png("wordcloud.png",width = 600,height = 500)	#png 저장
+
+wordcloud(words=df_word$word, #단어
+          freq=df_word$freq, #빈도
+          min.freq = 2, 	#최소 단어 빈도
+          max.words = 200,	#표현 단어 수
+          random.order = F,	#고빈도 단어 중앙배치
+          rot.per = .1,		#회전 단어 비율
+          scale = c(4,0.3),	#단어 크기 범위
+          colors = pal		#색상 목록
+          )
+
+dev.off()   #png 작업 끝.
+```
+
+
+
+## 지도시각화 (by using github)
+
+```R
+install.packages("ggiraphExtra")
+install.packages("mapproj")
+install.packages("stringi")
+install.packages("devtools")
+
+# git hub에서 가져오겠다는 거임
+devtools::install_github("cardiomoon/kormaps2014")
+
+```
+
+```R
+library(ggiraphExtra)
+library(kormaps2014)
+library(ggplot2)
+#인코딩을 CP949로 바꿔주면 에러가 없어짐.
+str(changeCode(korpop1))
+
+```
+
+
+
+## Interactive 그래프
+
+```R
+install.packages("plotly")
+install.packages("dygraphs")
+```
+
+```R
+#interactive graph
+library(plotly)
+library(ggplot2)
+p <- ggplot(data =mpg, aes(x=displ,y=hwy,col=drv)) +geom_point()
+ggplotly(p)
+
+
+#interactive bar chart
+p2<- ggplot(data =diamonds, aes(x=cut,fill=clarity)) +geom_bar()
+ggplotly(p2)
+
+
+#interactive 시계열
+library(dygraphs)
+economics <- ggplot2::economics
+library(xts)
+eco <-xts(economics$unemploy, order.by = economics$date)
+head(eco)
+
+dygraph(eco)
+
+#날짜범위 선택기능 추가
+dygraph(eco) %>% dyRangeSelector()
+
+#여러 값 표현
+#saving rate
+eco_a <- xts(economics$psavert, order.by = economics$date)
+#실업자 수
+eco_b <- xts(economics$unemploy/1000, order.by = economics$date)
+#combind
+eco2 <- cbind(eco_a, eco_b)
+colnames(eco2) <- c("psavert","unemploy")
+
+##
+dygraph(eco2) %>% dyRangeSelector()
+
+```
+
+
+
+## JDBC 연동 
+
+```R
+
+install.packages("RJDBC")
+install.packages("DBI")
+install.packages("rJava")
+# java connection 
+install.packages("Rserve")
+
+```
+
+#### R Script
+
+```R
+#Java에서 사용할 func 들 (dd, df)
+dd <- function(x,y){
+  z <- x + y;
+  return(z);
+}
+
+
+df<- function(){
+  year <- c(2010,2011,2012,2013,2014);
+  qt <- c(980,890,789,765,879);
+  result <- data.frame(YEAR=year,QT=qt);
+  return(result)
+}
+
+
+# connect to JDBC
+db<- function(){
+  library(RJDBC);
+  library(DBI);
+  library(rJava);
+  
+drv=JDBC(driverClass="oracle.jdbc.driver.OracleDriver",
+         classPath="c:\\ojdbc6_g.jar");
+
+conn=dbConnect(drv,"jdbc:oracle:thin:@70.12.114.50:1521:xe","db","db");
+
+tuser <-dbGetQuery(conn,"select * from t_user") ;
+class(tuser)
+dbDisconnect(conn);
+return(tuser);
+}
+```
+
+#### console
+
+반드시 해당 R Script가 열려있는 상태에서 Run실행...
+
+```R
+
+# Rserve open
+Rserve::run.Rserve()
+
+#Remote 접속
+Rserve::Rserve(args="--RS-enable-remote")
+
+```
+
+#### JavaAPP
+
+```java
+package rtest;
+import org.rosuda.REngine.Rserve.RConnection;
+public class Test1 {
+	public static void main(String[] args)throws Exception {
+			int x= 10;
+		int y= 20;
+		//접속 create connection
+		RConnection rc = new RConnection();
+		//remote con
+         //RConnection rc = new RConnection("70.12.114.66");
+        
+		System.out.println("connction oK");
+		
+		//실행
+		rc.eval("source('C:/rstudio/r4/r06.R', encoding = 'UTF-8', echo=TRUE)");
+		REXP rx = rc.eval("dd("+x+","+y+")");
+		double result = rx.asDouble();
+		System.out.println(result);
+		//접속종료  close connection 
+		rc.close();
+	}
+}
+```
+
+```java
+package rtest;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.rosuda.REngine.REXP;
+import org.rosuda.REngine.RList;
+import org.rosuda.REngine.Rserve.RConnection;
+
+public class Test3 {
+
+	public static void main(String[] args)throws Exception {
+		//temporary variables 
+        int x= 10;
+		int y= 20;
+		//create connection to R
+		RConnection rc = new RConnection("70.12.114.66");		
+		// handle an error cannot display KOREAN
+		rc.setStringEncoding("utf8");
+		
+		System.out.println("connction oK");
+		
+		//source.. load to memory
+		rc.eval("source('C:/rstudio/r4/r06.R', encoding = 'UTF-8', echo=TRUE)");
+		// execute function "db()" which is defined in R Script
+         REXP rx = rc.eval("db()");
+		//convert data.frame to List (no data.frame type in java)
+		RList rlist = rx.asList();
+//data is stored like this         
+   ID    PWD    NAME
+1  id05   0705    뎡대
+2  id66  pwd66  일말숙
+//       
+        //store data as an Array
+		String id []= rlist.at("ID").asStrings();
+		String name [] = rlist.at("NAME").asStrings();
+		String pwd [] = rlist.at("PWD").asStrings();
+		
+        //check if its length is correct
+		System.out.println(id.length+" "+name.length);
+		
+		// make JSON Array
+		JSONArray ja = new JSONArray();
+		for(int i =0; i<name.length;i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("NAME",name[i]);
+			jo.put("ID",id[i]);
+			jo.put("PWD",pwd[i]);
+			ja.add(jo);
+		}		
+		System.out.println(ja.toJSONString());
+		
+		for(String n: name) {
+			System.out.println(n);
+		}
+		//close connection 
+		rc.close();
+
+	}
+
+}
+
+```
+
+Hive 연동
+
+R Script 
+
+```R
+rhive <- function(){
+  library(RJDBC);
+  library(DBI);
+  library(rJava);
+  hive_lib <- 'c:\\lib';
+  .jinit();
+  .jaddClassPath(dir(hive_lib,full.names = T));
+  .jclassPath();
+  
+  drv=JDBC(driverClass='org.apache.hive.jdbc.HiveDriver',
+           'hive-jdbc-1.0.1.jar');
+  conn=dbConnect(drv,"jdbc:hive2://70.12.114.222:10000",
+                 "root","111111");
+  
+  user=dbGetQuery(conn,"select hdi.country,hdi.hdi from hdi limit 10");
+  dbDisconnect(conn);
+  return (user);
+}
+```
+
+Java App
+
+```java
+package rtest;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.rosuda.REngine.REXP;
+import org.rosuda.REngine.RList;
+import org.rosuda.REngine.Rserve.RConnection;
+public class Test4 {
+	public static void main(String[] args)throws Exception {
+		RConnection rc = new RConnection("70.12.114.66");	
+		System.out.println("connction oK");
+		rc.eval("source('C:/rstudio/r4/r06.R', encoding = 'UTF-8', echo=TRUE)");
+		REXP rx = rc.eval("rhive()");
+		RList rlist = rx.asList();
+		String country []= rlist.at("hdi.country").asStrings();
+		double hdi [] = rlist.at("hdi.hdi").asDoubles();
+
+		JSONArray ja = new JSONArray();
+		for(int i =0; i<hdi.length;i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("Country",country[i]);
+			jo.put("Hdi",hdi[i]);
+			ja.add(jo);
+		}
+		System.out.println(ja.toJSONString());
+		
+		for(String n: country) {
+			System.out.println(n);
+		}
+		//접속종료  close connection 
+		rc.close();
+	}
+}
+
+```
+
+
 
 
 
@@ -2093,4 +2525,15 @@ R Programming
    result <- sqldf('select Species,avg("Sepal.Length"),avg("Sepal.Width") from iris group by Species')
    ```
 
-   
+
+4. Rserve::run.Rserve() 실행시 잘 안꺼지는 문제가 발생. 작업관리자에서 Terminate 하기 바람.
+
+   추가로 해당 Script를 열어두고 Run 해야함. 그래야 Source 눌렀을때 제대로된 경로가 나옴.
+
+   Java App에서 한글이 깨진다면  주고받는과정에서 한글이 다른 타입으로 들어온다는 것이니
+
+   ```java
+   rc.setStringEncoding("utf8"); 
+   ```
+
+   를 활용해 convert 할 것.
