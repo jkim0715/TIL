@@ -2483,6 +2483,94 @@ public class Test4 {
 
 
 
+## 통계적 가설 검정
+
+- 기술 통계와 추론 통계
+
+기술 통계 : 데이터를 요약해 설명 하는 기법
+
+추론통계 : 가설을 세워서 접근. 
+
+
+
+통계적 가설 검정 필요.
+
+- 통계적 가설 검정을 하기전에 데이터가 적합한 데이터인지 검증 부터 해야함
+  - ex) 제조업 필드에서 분석한 결과를  보편화 시킬 수 없는 일.
+- 유의확률 : 우연히 발생할 확률 정도..
+
+결국 데이터를 잘 쌓아야 한다는 말임.
+
+
+
+t검정 : 두집단의 평균에 차이가 있는지 검정
+
+이유: 예측 모델을 만들수 있음, 평가에 대한 기준으로 삼을 수 도 있음.
+
+- ex) compact 자동차와 suv 자동차의 도시연비 t 검정
+
+```R
+library(ggplot2)
+## class 별 cty 연비 평균 
+aggregate(data = mpg,cty~class, mean)
+
+mpg_diff<-mpg[mpg$class %in% c("compact","suv"), c("class","cty")]
+table(mpg_diff$class)
+
+## t test
+t.test(data=mpg_diff, cty~class, var.equal=T)
+###################################
+
+library(ggplot2)
+mpg[,c("trans","hwy")]
+
+mpg_diff3 <- mpg[, c("trans","hwy")]
+mpg_diff3$trans <- ifelse(substr(mpg$trans,1,4) == "auto","auto","manual")
+#test
+t.test(data=mpg_diff3,hwy~trans, var.equal=T)
+
+```
+
+
+
+
+
+
+
+상관분석: 두 변수가 관련이 있는지 검정
+
+```R
+library(ggplot2)
+economics
+
+ggplot(data = economics,aes(x = unemploy,y = pce)) + geom_point()
+# 상관분석
+re <- cor.test(economics$unemploy,economics$pce)
+
+
+
+#유의수준 
+if(re$p.value < 0.05){  ## 상관관계가 있다면 값을 리턴
+  result = lm(economics$pce~economics$unemploy)
+  result$coefficients
+}else{
+  #아니면 말고 
+}
+
+
+##
+result = lm(economics$pce~economics$unemploy)
+result$coefficients
+#Coefficients:
+#  (Intercept)  economics$unemploy  
+#-1609.1876              0.8273  
+# y =  -1609.1876 * 0.8273x
+```
+
+
+
+
+
 
 
 
@@ -2516,7 +2604,7 @@ R Programming
 1. csv 파일이 Rstudio내에서 꺠져서 보일때 (csv 파일 저장할때 ANSI 말고 UTF-8로 저장)
    
 - 그냥 저장할때 엑셀파일 이용하거나 하셈
-   
+  
 2. 잘라낸 데이터 타입이 Data Frame 일 경우 mean 연산이 안되므로 타입 캐스팅이 필요함.
 
 3. SQL문을 쓸때 컬럼명에 . 이포함되면 못읽을 수 있으니 바깥쪽을 single quatation, 컬럼명을 double quatation을 써서 처리
