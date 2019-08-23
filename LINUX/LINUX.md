@@ -1528,39 +1528,29 @@ shell programming 을 하는 이유
 
 ### R + R Studio 설치 (feat. CentOs 최신버전)
 
- /etc/yum.repos.d/
-
-에서
-
-vi epel.repo 
-
-아래와 같이 모든 내용을 수정
-
-
-
-baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch
-
-\#metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
-
-
-
-
+ 
 
 \1. R 인스톨 시 필요 라이브러이 인스톨
 
 yum -y install epel-release
 
+- /etc/yum.repos.d/
 
+  에서
+
+  vi epel.repo 
+
+  아래와 같이 모든 내용을 수정
+
+- baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch
+
+  \#metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
 
 \2. OS 업그레이드
 
 yum -y upgrade
 
-
-
 \3. reboot
-
-
 
 \4. R 인스톨 시 필요 라이브러이 인스톨
 
@@ -1568,13 +1558,9 @@ yum -y update lvm2*
 
 yum -y update device-mapper*
 
-
-
 \5. R 인스톨
 
 yum -y install R
-
-
 
 \6. Rstudio 설치
 
@@ -1582,14 +1568,10 @@ yum -y install R
 
 [RStudio 1.2.1335 - Fedora 19/RedHat 7 (64-bit)](https://download1.rstudio.org/desktop/centos7/x86_64/rstudio-1.2.1335-x86_64.rpm) 설치
 
+/usr/bin 에 소프트 링크도 만들기 
 
+reboot
 
-\7. reboot
-
-
-
-\8. 로그인 시 centos로 로그인 한 후 
+\8. 로그인 시 centos로 로그인 한 후  (Switch User 안통함)
 
 rstudio 실행
-
-**[출처]** Linux R install (비공개 카페)
