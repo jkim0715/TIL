@@ -112,7 +112,55 @@ Queue (FIFO)
   }
   ```
 
+- ```java
+  package programmers;
   
+  public class Stock {
+  
+  	public static void main(String[] args) {
+  	int [] prices = {1,2,3,2,3};
+  	int [] answer = new int [prices.length];
+  	int p =0;
+  	int cnt=0;
+  	while(true) {
+  		
+  		for(int i=p+1; i<prices.length-1;i++ ) {
+  		
+  			if(prices[p] <= prices[i]) {
+  				cnt++;
+  			
+  			}if(prices[p] > prices[i]) {
+  				cnt++;
+  				answer[p] = cnt;
+  				cnt =0;
+  				break;
+  			}if(i == prices.length-2) {
+  				answer[p] = cnt+1;
+  				cnt=0;
+  				break;
+  			}
+  			
+  		}
+  		if(p==prices.length-2) {
+  			answer[p] = 1;
+  		}
+  		if(p==prices.length-1 ) {
+  			answer[p] = 0;
+  			break;
+  		}
+  		p++;
+  	}
+  	for(int i=0; i<answer.length;i++) {
+  		System.out.println(answer[i]);
+  	}
+  	
+  	
+  	}
+  
+  }
+  ```
+
+- 
 
 
 
