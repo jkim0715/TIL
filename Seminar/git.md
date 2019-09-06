@@ -179,6 +179,8 @@ https://www.sublimetext.com/
 
 3. branching 
 
+   
+
 협업의 원칙 
 
 1. 독재 by 팀장 
