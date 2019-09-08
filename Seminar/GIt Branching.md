@@ -100,5 +100,5 @@ git reset --hard HEAD
 
 3. Merge with Conflict 
 
-   
+   Merge시 conflict가 나면 자동으로  인지하고 수정을 요구함.. GUIDE대로 따라서 수정 후 다시 commit하면 됨.
 
