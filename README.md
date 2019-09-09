@@ -10,6 +10,7 @@ Lectures 모음
 - GIT
 - JAVA
 - LINUX
+  RAID + HaDoop + HIVE
 - Mini_Project
 - Project
 - Seminar
