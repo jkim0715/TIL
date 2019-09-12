@@ -160,6 +160,43 @@ Queue (FIFO)
   }
   ```
 
+-  
+
+DFS/BFS
+
+- ```java
+  public class TargetValue {
+      
+      
+      public static void main(String[] args) {
+          int [] numbers = {1,1,1,1,1} ;
+          int target = 3 ;
+          
+          dfs(numbers,target,0,0);
+          System.out.println(dfs(numbers,target,0,0));
+      }
+   
+      
+      public static int dfs(int [] numbers, int target, int depth,int pnum) {
+          
+          int ans = 0;
+          if(depth == numbers.length) {
+              if( pnum == target) {
+          
+              return 1; 
+              }
+              else {
+                  return 0;
+              }
+          }
+          ans += dfs(numbers, target, depth+1, pnum + numbers[depth]);
+          ans += dfs(numbers, target, depth+1, pnum - numbers[depth]);
+   
+          return ans;    
+      }
+  }
+  ```
+
 - 
 
 
