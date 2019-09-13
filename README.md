@@ -17,3 +17,31 @@ Lectures 모음
 - Spring
 - UML
 - Web
+
+Android
+
+- 사용 툴 : Android Studio
+
+BigData
+
+- 사용 툴 : R studio
+
+DataBase
+
+- Oracle DB
+- Maria DB
+
+GIT
+
+- github
+
+JAVA
+
+- JDK
+- 사용 IDE : eclipse
+
+LINUX
+
+- CentOS7
+- RAID
+
