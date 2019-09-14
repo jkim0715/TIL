@@ -45,3 +45,8 @@ LINUX
 - CentOS7
 - RAID
 
+Seminar
+
+- AI
+- Team Project
+- Git
