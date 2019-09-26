@@ -3,7 +3,10 @@
 ### I. 실습
 
 - 실제 자동차 없이 컴퓨터를 이용해 테스트
+
 - 전송하는 데이터를 CAN버스에 물려있는 모든 ECU가 응답.
+
+  ![CANpro시작](https://user-images.githubusercontent.com/50862254/65656601-643ee500-e05b-11e9-8970-edf7f190e784.png)
 
 ### II. 연결
 
@@ -27,6 +30,8 @@ Low - Low
       노란색 느낌표가 표시된 상태로 등록된것을 볼 수 있다.
       ```
 
+      ![USB연결](https://user-images.githubusercontent.com/50862254/65656673-acf69e00-e05b-11e9-89d2-74ea1083d0f8.png)
+
    2. dp-chooser 실행
 
       ```
@@ -44,17 +49,27 @@ Low - Low
       설치하고 실행시켜 동작을 확인한다.
       ```
 
+      ![데이터 송수신](https://user-images.githubusercontent.com/50862254/65656752-ea5b2b80-e05b-11e9-8f20-ba1bc0f6bcf1.png)
+
       3-1. 여러개 연결
 
       ```
       CANPro를 하나 더 준비하여 서로 Serial로 연결한 후 각 PC에 연결하면 장치관리자 > 포트 부분에 USB Serial Port가 하나 더 잡히는걸 확인할 수 있다. 이제 analyzer를 2개 실행해서 serial com포트를 각기 다른 port번호로 설정한 후 로 데이터 통신을 할 수 있는지를 확인한다.
       ```
 
-      
+      ![4대연결(2)](https://user-images.githubusercontent.com/50862254/65656725-d1eb1100-e05b-11e9-817b-98cd72a89370.png)
 
 2. CAN pro Analyzer 설치
 
+   ![CANpro시작](https://user-images.githubusercontent.com/50862254/65656601-643ee500-e05b-11e9-8970-edf7f190e784.png)
+
    1. 환경설정.
+
+      CAN장비들끼리 환결설정이 일치해야 데이터를 송 수신 가능. (EX Serial 전송속도, 프로토콜, CAN BPS)
+
+      ![환경설정](https://user-images.githubusercontent.com/50862254/65656851-43c35a80-e05c-11e9-9272-2be16c842d6f.png)
+
+      
 
 ### IV. CAN protocol
 
