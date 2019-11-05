@@ -3,7 +3,7 @@ Lectures 모음
 
 목차
 
-- Android
+- [Android](#android)
 - BigData
 - DataStructure
 - DB(DataBase)
@@ -50,3 +50,7 @@ Seminar
 - AI
 - Team Project
 - Git
+
+
+
+## Android 
