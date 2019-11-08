@@ -18,6 +18,8 @@ Low - Low
 
 실제 자동차랑 연결할 땐 USB로 연결하지 않고 Serial로 연결 함.
 
+ Comm Port는 Serial 과 Parallel 로 나뉨
+
 ### III. 설치
 
 1. 드라이버 설치
@@ -100,6 +102,8 @@ CAN은 송수신 동시에 가능.
 2. 송신부 
 
    1. 송신 데이터 설정
+
+대신 한개의 포트는 한개의 CAN Proanalyzer만 사용 가능.
 
 ODB
 

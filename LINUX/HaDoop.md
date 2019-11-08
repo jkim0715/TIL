@@ -708,3 +708,5 @@ http://stat-computing.org/dataexpo/2009
 
 4. 하이브 연동 java App이 작동안할 경우 hive --service hiveserver2 준비 되어 있는지 확인
 >>>>>>> 4a4cdfb6beffe592d11cb53dd5c3677ca3ccab19
+>>>>>>>
+>>>>>>> 
