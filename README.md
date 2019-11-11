@@ -13,6 +13,7 @@ Lectures 모음
   RAID + HaDoop + HIVE
 - [Mini_Project](#mini_project)
 - [Project](#project)
+- [Python](#python)
 - [Seminar](#seminar)
 - [Spring](spring)
 - [UML](#uml)
@@ -114,9 +115,8 @@ Seminar
 
 ## Python
 
-- Python
-- Python02
-- Python03
+- Flask
+- Django
 
 ## Seminar
 
