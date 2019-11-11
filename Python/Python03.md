@@ -1,18 +1,19 @@
 ## Contents
 
 - Parameter
+
+  - query string
+  - path parameter
+
+  *웹툰 데이터를 요일별로 다르게 url 세우기* 
+
+  *html 파일로 view 만들기(render template)*
+
 - Beautiful soup
 
-## Parameter
 
-- query string
-- path parameter
 
-*웹툰 데이터를 요일별로 다르게 url 세우기* 
-
-*html 파일로 view 만들기(render template)*
-
-## Beautiful soup
+## I. Beautiful soup
 
 - 사이트 구조 분석하는 방법 (HTML은 어떻게 하는지)
 
@@ -43,7 +44,9 @@
 
   
 
-## Parameter
+## II. Parameter 
+
+### query string
 
 url ? 파라미터명 = 값 & 
 
@@ -127,3 +130,31 @@ Html 파일을 찾아주고 연결시켜주는 친구
   render_template('파일명', 변수명 =변수명, 변수명2=변수명2 )
 
   음 변수넘길때 dictionary에 다 저장해서 넘기는 방법도 활용 할 수 있을듯...
+
+
+
+## Note
+
+- render_template('day_webtoon_list.html', webtoon_dic = webtoons)
+
+- python list to string join
+  - ",".join(webtoon_srtists)
+
+
+
+
+
+
+
+## Note
+
+- Chrome 개발자 도구 Network 탭 보는 법.
+
+- Network탭과 Elements 탭을 분석해서 여러사이트 크롤링 하는 방법
+
+  - CSRF 토큰 : 보안용 패스코드
+    - 정식적인 path로 접근한 요청인지 아닌지 판별.
+    - 기초적인 토큰이라 파라미터로 같이 넘겨주면 쉽게 뚫림.
+
+  
+
