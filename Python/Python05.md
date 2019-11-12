@@ -13,7 +13,7 @@
 
 
 
-## II. [WORKSHOP (Django Project)](/https://github.com/jkim0715/Python/tree/master/Day5/day5)
+## II. [WORKSHOP (Django Project)](https://github.com/jkim0715/Python/tree/master/Day5/day5)
 
 
 
@@ -56,7 +56,7 @@
             path('lotto/winning', lotto_views.winning)
         ```
 
-3. [views.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/lotto/views.py)
+3. [views.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/lotto/views.py)
 
    함수 등록 
 
