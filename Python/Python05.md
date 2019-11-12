@@ -30,12 +30,12 @@
 
 - views.py, urls.py, settings.py 
 
-1. [settings.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/settings.py)
+1. [settings.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/settings.py)
 
    1. INSTALLED_APPS : 프로젝트에서 사용할 앱 등록
       -  'lotto' 추가
 
-2. [urls.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/urls.py)
+2. [urls.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/urls.py)
 
    - 사용자로 부터 request가 들어오면 urls.py 파일이 어느 views의 Method로 갈 것인지 설정을 해 준다.
 
@@ -74,7 +74,7 @@
 
    - request랑 requests 구별
 
-4. lotto 폴더 밑에 [templates](/https://github.com/jkim0715/Python/tree/master/Day5/day5/lotto/templates) 폴더를 만들어서 html 파일 저장.
+4. lotto 폴더 밑에 [templates](https://github.com/jkim0715/Python/tree/master/Day5/day5/lotto/templates) 폴더를 만들어서 html 파일 저장.
 
    - html:5   (자동완성 )
 
@@ -97,11 +97,11 @@
 - http://artii.herokuapp.com/make?text=hello&font=bubble__
 - http://artii.herokuapp.com/fonts_list
 
-[settings.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/settings.py)
+[settings.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/settings.py)
 
-[urls.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/urls.py)
+[urls.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/urls.py)
 
-[views.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/ascii/views.py)
+[views.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/ascii/views.py)
 
 1. 원하는 텍스트와 폰트를 입력
    - 폰트는 fonts_list에서 받아온 폰트들을 select / option 으로 뿌렸음
@@ -116,13 +116,13 @@
 
 ### 3. OPgg
 
-1. [settings.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/settings.py)
-2. [urls.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/urls.py)
-3. [views.py](/https://github.com/jkim0715/Python/blob/master/Day5/day5/opgg/views.py)
+1. [settings.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/settings.py)
+2. [urls.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/day5/urls.py)
+3. [views.py](https://github.com/jkim0715/Python/blob/master/Day5/day5/opgg/views.py)
    1. 아이디 입력 받기
    2. 해당 소환사의 전적을 BeaurifulSoup으로 select 해서 가져오기
    3. 전적을 결과 페이지에 뿌려서 보여주기.
-4. [Templates](/https://github.com/jkim0715/Python/tree/master/Day5/day5/opgg/templates)
+4. [Templates](https://github.com/jkim0715/Python/tree/master/Day5/day5/opgg/templates)
    - opgg.html
    - ratio.html
      - 이름이 겹치면 다른 App의 html을 불러올 수 있으므로 조심.
