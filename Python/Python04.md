@@ -50,7 +50,11 @@
 **어플리케이션 생성**
 
 - *python manage.py startapp webtoon*
+  
   - "webtoon" 이라는 앱을 만듬.
+  
+  - django에서 app의 단위는 하나의 모델에 대한 모든 내용이 담겨 있다.
+    - 예를 들어 게시판을 만든다고 하면 post라는 app을 만들어 그안에서 모든 내용을 처리한다
 
 
 
