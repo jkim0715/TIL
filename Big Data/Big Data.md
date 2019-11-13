@@ -1,4 +1,4 @@
-Big Data
+## Big Data
 
 개요
 
@@ -33,7 +33,7 @@ Big Data
 
 
 
-하둡
+## 하둡
 
 - 대용량 데이터를 분산 처리할 수 있는 자바 기반의 오픈소스 프레임워크
 
@@ -59,7 +59,7 @@ Big Data
 
 
 
-하둡 분산파일 시스템
+## 하둡 분산파일 시스템
 
 HDFS (Hadoop Distributed File System)
 

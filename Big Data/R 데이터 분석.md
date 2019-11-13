@@ -24,7 +24,7 @@ R은 데이터 분석을 위한 통계 및 그래픽스를 지원하는 자유 �
 
 9. R를 쓰는 이유는 통계 패키지를 활용할 수 있기 때문이다.
 
-I. R설치하기
+### I. R설치하기
 
 - http://www.r-project.org/
 - Windows 용 다운로드 
@@ -32,7 +32,7 @@ I. R설치하기
 
 
 
-II. Rstudio
+### II. Rstudio
 
 - IDE 툴 (Integrated  Development Environment)
 
@@ -43,7 +43,7 @@ II. Rstudio
 
 
 
-III. 활용
+### III. 활용
 
 file - new project - new Directory - new project - (폴더 이름이랑 경로 설정하고 create)r
 
