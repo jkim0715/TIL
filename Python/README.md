@@ -23,3 +23,8 @@
 - Python05
   - Django
   - 로또번호 생성기 + 번호체크 + 번호
+  - ASCII
+  - OPGG
+- Python06
+  - 카카오 API 활용
+    - 카카오 Developer 가입하고, 앱 만들기
