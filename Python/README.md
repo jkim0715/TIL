@@ -28,3 +28,6 @@
 - Python06
   - 카카오 API 활용
     - 카카오 Developer 가입하고, 앱 만들기
+- Python07
+  - Naver API 활용
+  - ORM (CRUD)
