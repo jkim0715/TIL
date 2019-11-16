@@ -92,8 +92,9 @@
 
 - [SQLite 브라우져 뷰어](https://sqlitebrowser.org/)
 - from django.db import models
-  - django.db의 models를 import해오는 것임.
-
+  
+- django.db의 models를 import해오는 것임.
+  
 - from A import B  VS import
 
   - It depends on how you want to access the import when you refer to it.
@@ -117,4 +118,22 @@
     ```
 
 - Django Shell
+  
   - first() 가있고..  last()도 있음.. 
+
+
+
+### Summary
+
+- NAVER API 사용해보기
+
+  - 외부 사이트에 Resquest를 보낼 때, Post 방식으로 요청하는 방법을 배움
+  - Request Body에 단순히 파라미터명과 파라미터값으로 이루어진 쌍이 아니라 json 형식으로 파라미터를 보내는 방법
+
+- ORM 기초
+
+  - Create, Read를 Django Shell에서 실행시켜보기
+  - ORM이 무엇인지? 왜 사용해야 하는지?
+    - 객체랑 한 row랑 매칭, 테이블의 한 row를 파이썬에서 한개의 객체로 활용 가능.
+
+  
