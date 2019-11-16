@@ -30,4 +30,10 @@
     - 카카오 Developer 가입하고, 앱 만들기
 - Python07
   - Naver API 활용
-  - ORM (CRUD)
+  - ORM (CRUD) 기초
+
+- Python08
+  - 게시판 만들기
+    - URL 분리
+    - base.html
+  - Bootstrap
