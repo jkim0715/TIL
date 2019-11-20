@@ -12,7 +12,7 @@
   - Beautiful Soup
   - render_template
 - Python04
-  - Django (port :8000)
+  - Django 기본 (port :8000) 
     - 설치
     - 구조
   - REST API
@@ -21,7 +21,7 @@
     - 검색창
     - 로그인
 - Python05
-  - Django
+  - Django 연습 
   - 로또번호 생성기 + 번호체크 + 번호
   - ASCII
   - OPGG
@@ -31,9 +31,19 @@
 - Python07
   - Naver API 활용
   - ORM (CRUD) 기초
-
 - Python08
   - 게시판 만들기
     - URL 분리
     - base.html
   - Bootstrap
+- Python09
+  - URL NameSpace
+  - RESTful API 기본
+  - Django Admin 
+- Python10
+  - RESTful API 연습
+  - CSRF
+- Python11
+  - Instagram 기초
+    - Articles (1:N)
+    - Comments
