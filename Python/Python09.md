@@ -33,20 +33,23 @@
 
 - 각각의 URL에 별명을 지어줘서 html파일에서 사용하는 링크를 추가적으로 바꾸지 않고, 'urls.py'에서만 수정하면 HTML 파일에서도 링크 수정이 반영되게끔 함.
 
+- ***app_name 설정하고 띄어쓰기 조심해야 됨*** 
+
 - urls.py
 
   - ```python
-     path('new/', views.new, name = "new"),
+     app_name='articles'
+    path('new/', views.new, name = "new"),
     ```
 
 - html
 
   - ```HTML
-    {% url 'show' article.id %}
+    {% url 'articles:show' article.id %}
     ```
 
   - ```html
-    {% url 'new' %}
+    {% url 'articles:new' %}
     ```
 
 - views.py
