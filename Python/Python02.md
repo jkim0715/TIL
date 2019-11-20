@@ -40,7 +40,13 @@ app.py ( default name)
 
 *Development Mode* 서버 코드를 바꿧을때 서버 껏다 킬 필요없이 새로고침 만으로도 변경 내용 반영.
 
-flask run
+- ##### $env:FLASK_ENV="Develpment"
+
+- ##### $env:FLASK_DEBUG="True"
+
+##### flask run
+
+
 
 
 
