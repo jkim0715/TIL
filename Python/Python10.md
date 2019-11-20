@@ -16,7 +16,7 @@
 - POST 요청을 안정적으로 보낼 수 있게 만들어주는 녀석들임.
 
   - ```html
-    <input type = "text" name = csrfmiddlewaretoken value = "{{csrf_token}}">
+    <input type = "hidden" name = csrfmiddlewaretoken value = "{{csrf_token}}">
     ```
 
 
