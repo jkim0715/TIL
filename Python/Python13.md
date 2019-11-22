@@ -1,0 +1,3 @@
+- Auth
+  - 이미 DJango에 auth와 session이 들어가 있음 (Installed App).
+- BJS?
