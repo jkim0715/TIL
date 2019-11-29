@@ -40,6 +40,7 @@
   - URL NameSpace
   - RESTful API 기본
   - Django Admin 
+    - user 만들기 
 - Python10
   - RESTful API 연습
   - CSRF
@@ -47,3 +48,18 @@
   - Instagram 기초
     - Articles (1:N)
     - Comments
+- Python12
+  - Static Field
+  - 이미지 파일
+    - 저장
+    - 뿌리기
+    - Resize
+    - 썸네일
+- Python13
+  - JS / jQuery 기초
+- Python14
+  - JS + jQuery
+  - Ajax 기초
+- Python15
+  - jQuery + Ajax를 적용한 CRUD
+  - Auth를 이용한 유저

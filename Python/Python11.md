@@ -83,8 +83,9 @@
       - 로직을 탄다고 생각하면 됨.
     - {{}} 실제 출력. ( 실제 사용자가 볼 수 있는 화면)
 - Redirect 
-  - url를 한번 더 타는 것.
-
+  
+- url를 한번 더 타는 것.
+  
 - CallBack
 
   - 동작이 완료됐다고 알려주는 것
@@ -94,3 +95,4 @@
   -  ('article', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='article.Article')),
 
   
+

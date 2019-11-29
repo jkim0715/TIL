@@ -169,6 +169,10 @@
 - 요금 : Response에 담기는 용량 만큼 과금.
   - 이미지 리사이징, 썸네일을 이용해 용량 최소화.
 - 프레임워크 vs 라이브러리 차이점 찾아보기
+  - IOC
+  - A library is just a collection of class definitions
+  - In framework, all the control flow is already there, and there's a bunch of predefined white spots that you should fill out with your code. 
+  - 
 - Bootstrap 쓰는 이유  : Grid system (12분할)
 
 

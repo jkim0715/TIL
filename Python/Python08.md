@@ -154,7 +154,7 @@
 
 
 - Beautify 
-  - auto indent 
+  - auto indent 기능
     - ctrl + p
       - " > beatify file"
 
