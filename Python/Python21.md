@@ -7,7 +7,7 @@
 
 #### heroku 설치
 
-- *$pip insall django_heroku*
+- *$pip install django_heroku*
 
 - 안되면
 

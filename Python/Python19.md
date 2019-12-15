@@ -30,7 +30,13 @@ rm board/migrations/0*
 
 ### pip install django-bootstrap4
 
+settings.py
 
+installed_app =[	
+
+'bootstrap4'
+
+]
 
 
 
