@@ -10,11 +10,23 @@
 ### venv 폴더
 
 - 터미널을 가상환경을 만듬
-  - python venv venv
+  
+  ```shell
+  $python -m venv venv
+  ```
+  
+  
+  
 - 터미널이 가상환경을 보도록 만듬 
-  - source venv/Scripts/activate
+  
+  ```shell
+  $source venv/Scripts/activate
+  ```
+  
 - F1 -> Select Interpreter -> .`\venv\ 선택
-- pip freeze
+
+- `$pip freeze`
+  
   - install된 내역 버전까지 상세보기 
 
 
@@ -23,7 +35,7 @@
 
 - Pip freeze한 내역 기록하는 부분
   - 복사 붙여넣기 해도 되는데 extension을 이용하도록 하자
-  - pip freeze > requirements.txt
+  - `$pip freeze > requirements.txt`
 
 
 
@@ -56,11 +68,8 @@
 
     f = Faker()
 
-  - ```python
     
-    ```
-
-  - 
+  
 
 
 
