@@ -112,15 +112,26 @@ t = new Tv();			// Tv인스턴스를 생성한 후, 생성된 Tv 인스턴스의
 
 - Encapsulation
 
-  - modifier
+  > Private > (Default) > Protected > Public
 
-    - private  & public  
+  - Default : 같은 패키지 내 공개
+  - Protected : 같은 패키지 내 + 상속관계 까지.
 
-    - ``` java
-      private String color;
-      private boolean power;  
-      public int channel;
-      ```
+  
+
+  ​	member variable  > private
+
+  ​	Getter / Setter  > public
+
+  modifier
+
+  - private  & public  
+
+  - ``` java
+    private String color;
+    private boolean power;  
+    public int channel;
+    ```
 
   - Getter & Setter 
 
@@ -145,7 +156,9 @@ t = new Tv();			// Tv인스턴스를 생성한 후, 생성된 Tv 인스턴스의
   
 
 - Abstration
+
 - Override
+
 - Overload
 
 
