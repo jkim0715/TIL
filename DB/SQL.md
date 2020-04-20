@@ -1,9 +1,7 @@
-## SQL
+# SQL
 
 - data를 조작하고 어떻게 연동하는가..?  에 대해 공부
 - ANSI 표준, Oracle 표준, 
-
-
 
 - 다양한 App과의 연동을 위해 배웠음..
 
@@ -47,9 +45,7 @@
 
 
 
-## SQL 문장 
-
-#### 종류
+# SQL 종류
 
 ## DDL(Data Definition Language) :데이터 정의언어
 
@@ -79,87 +75,112 @@ CREATE TABLE T_PRODUCT(
 
 - #### DROP
 
-``` sQL
-DROP TABLE T_USER; 	//테이블 뿐만 아니라 데이터까지 싹다날림.. 잘못하면 소송감임 
-```
+  ``` sQL
+  DROP TABLE T_USER; 	//테이블 뿐만 아니라 데이터까지 싹다날림.. 잘못하면 소송감임 
+  ```
 
+  `CASCADE`: 왜래키로 연결된 테이블 까지 모두 삭제
 
+  `RESTRICT`: 왜래키로 연결된 테이블을 삭제 방지
 
 - #### ALTER
 
-  - 제약조건 주기
-
-``` SQL
-ALTER TABLE T_PRODUCT ADD (REGDATE DATE);-- 제약조건 변경, 컬럼 추가
-ALTER TABLE T_PRODUCT DROP (REGDATE);-- 빼기
-ALTER TABLE T_PRODUCT ADD PRIMARY KEY (ID); -- ID에 PRIMARY KEY 추가
-ALTER TABLE T_PRODUCT MODIFY(NAME CHAR(10)); --타입 바꾸기 VARCHAR -> CHAR
-ALTER TABLE T_PRODUCT MODIFY(NAME NULL);  -- 제약조건 바꿀 수 있다,
-ALTER TABLE T_PRODUCT RENAME COLUMN NAME TO UNAME; -- 이름을 NAME -> UNAME 으로 바꾸기
-ALTER TABLE T_PRODUCT RENAME TO PRODUCT; --테이블 이름 바꾸기.
-ALTER TABLE T_USER MODIFY (NAME UNIQUE); -- 유니크만들기(PRIMARY KEY 말고)같은이름 불가
-```
-
-
+  > ```sql
+  > ALTER TABLE 테이블_이름
+  > ADD 속석_이름 데이터_타입 [NOT NULL] [DEFAULT 기본값]; -- 새로운 속성 추가
+  > 
+  > ALTER TABLE 테이블_이름
+  > DROP 속성_이름 CASCADE|RESTRICT -- 기존 속성 삭제.
+  > ```
+  
+  - 제약조건 주기도 가능
+  
+  ``` SQL
+  ALTER TABLE T_PRODUCT ADD (REGDATE DATE);-- 제약조건 변경, 컬럼 추가
+  ALTER TABLE T_PRODUCT DROP (REGDATE);-- 빼기
+  ALTER TABLE T_PRODUCT ADD PRIMARY KEY (ID); -- ID에 PRIMARY KEY 추가
+  ALTER TABLE T_PRODUCT MODIFY(NAME CHAR(10)); --타입 바꾸기 VARCHAR -> CHAR
+  ALTER TABLE T_PRODUCT MODIFY(NAME NULL);  -- 제약조건 바꿀 수 있다,
+  ALTER TABLE T_PRODUCT RENAME COLUMN NAME TO UNAME; -- 이름을 NAME -> UNAME 으로 바꾸기
+  ALTER TABLE T_PRODUCT RENAME TO PRODUCT; --테이블 이름 바꾸기.
+  ALTER TABLE T_USER MODIFY (NAME UNIQUE); -- 유니크만들기(PRIMARY KEY 말고)같은이름 불가
+  ```
+  
+  
 
 
 
 ## DML(Data Manipulation Language):데이터 조작언어
 
-- #### SELECT(Read)
+- #### SELECT(Read) 
 
-  - 검색용
-
-``` SQL
-SELECT * FROM EMP;
-
-SELECT ENAME,SAL FROM EMP;
-
-SELECT ENAME,SAL,DEPTNO AS DNO FROM EMP;  --컬럼 명칭 바꿔버리기
-SELECT ENAME,SAL,SAL*12 AS ASAL,DEPTNO AS DNO FROM EMP; -- 연봉계산하고 이름 쉽게 바뀌기
-SELECT ENAME,SAL,SAL*12 AS "ANN SAL",DEPTNO AS DNO FROM EMP; -- 중간에 한칸 띄우기 "" 쓰면댐
-
-SELECT ENAME || JOB FROM EMP;  -- merge 같은 기능.. 노쓸모일듯..
-SELECT ENAME,SAL + COMM,SAL FROM EMP; --컬럼 더해서 표에 표시
-SELECT SAL, COMM, (SAL*12*.87) + (NVL(COMM,0)*12*.88) AS ANNSAL FROM EMP;
-/*  NVL (XXX,0)  XXX에서 NULL값을 0으로 계산 */
-SELECT SAL, COMM, (SAL*12*.87) + (NVL(COMM,0)*12*.88) AS ANNSAL FROM EMP WHERE (SAL*12*.87) + (NVL(COMM,0)*12*.88) > 30000;  -- 30000 이상 고르기.. WHERE 절에 그냥 WHERE ANNSAL > 30000 안되고 식을 싹다 써야함... 
-
-
-
-SELECT ENAME || ''|| SAL AS ENAMEANDJOB FROM EMP;  
-SELECT DISTINCT(JOB) FROM EMP;		-- 컬럼 종류 중복 걸러내기
-
-SELECT * FROM EMP WHERE JOB = 'SALESMAN' -- SALESMANS만 찾기
-SELECT * FROM EMP WHERE JOB = 'SALESMAN' AND SAL > 1000;  -- 조건 여러개도 가능.
-SELECT * FROM EMP WHERE JOB = 'MANAGER' AND SAL >1000 AND HIREDATE > '02/20/1981';
-
-SELECT ENAME,SAL FROM EMP WHERE SAL BETWEEN 2000 AND 3000 -- 양 끝단의 값을 포함하기 때문에 주의 ! 
-
-
-/*
-중간에 들어간 글자 찾기
-*/
-SELECT * FROM EMP WHERE ENAME LIKE '%C%'; -- 중간에 c
-SELECT * FROM EMP WHERE ENAME LIKE '%C';	-- C로 끝남
-SELECT * FROM EMP WHERE ENAME LIKE 'C%';	-- C로 시작
-SELECT * FROM EMP WHERE  ENAME NOT LIKE '%F%' ; -- F 안드가는거.
-
-SELECT * FROM EMP WHERE COMM IS NULL ; -- NULL 값 조회는 비교연산자 = 를 사용하지 못한다. IS NULL  / IS NOT NULL
-SELECT * FROM EMP WHERE NOT (SAL >= 2000)  ; --이런것도 가능..
-SELECT * FROM EMP WHERE  SAL < 2000 AND DEPTNO = 30 OR ENAME LIKE '%F%' ; -- AND OR 연산은 앞에서부터 순서대로 진행
-
--- 정렬
-SELECT ENAME,SAL FROM EMP ORDER BY SAL			--기본 오름차순 ASC
-SELECT ENAME,SAL FROM EMP ORDER BY SAL DESC;	-- DESC 내림차순
-SELECT ENAME,SAL FROM EMP WHERE SAL >1000 AND DEPTNO =20 ORDER BY 2;  -- 2번 = SAL 이므로 같은 값,, 1이면 ENAME 이므로 앞파벳 순으로 정렬
-SELECT ENAME,SAL, SAL*12 AS ANN_SAL FROM EMP WHERE SAL >1000 AND DEPTNO =20 ORDER BY ANN_SAL;  -- 컬럼명으로 비교는 안됐지만 정렬은 가능 !
-
-SELECT * FROM EMP WHERE MGR IS NOT NULL ORDER BY MGR,ENAME; -- 여러개 정렬 가능. 
-SELECT * FROM EMP WHERE COMM IS NOT NULL ORDER BY COMM DESC -- NULL값 빼고정렬
-```
-
-
+  > 테이블 검색, RETURN값도 테이블임.
+  
+  ``` SQL
+  SELECT * FROM EMP;
+  
+  SELECT ENAME,SAL FROM EMP;
+  
+  SELECT ENAME,SAL,DEPTNO AS DNO FROM EMP;  --컬럼 명칭 바꿔버리기
+  SELECT ENAME,SAL,SAL*12 AS ASAL,DEPTNO AS DNO FROM EMP; -- 연봉계산하고 이름 쉽게 바뀌기
+  SELECT ENAME,SAL,SAL*12 AS "ANN SAL",DEPTNO AS DNO FROM EMP; -- 중간에 한칸 띄우기 "" 쓰면댐
+  
+  SELECT ENAME || JOB FROM EMP;  -- merge 같은 기능.. 노쓸모일듯..
+  SELECT ENAME,SAL + COMM,SAL FROM EMP; --컬럼 더해서 표에 표시
+  SELECT SAL, COMM, (SAL*12*.87) + (NVL(COMM,0)*12*.88) AS ANNSAL FROM EMP;
+  /*  NVL (XXX,0)  XXX에서 NULL값을 0으로 계산 */
+  SELECT SAL, COMM, (SAL*12*.87) + (NVL(COMM,0)*12*.88) AS ANNSAL FROM EMP WHERE (SAL*12*.87) + (NVL(COMM,0)*12*.88) > 30000;  -- 30000 이상 고르기.. WHERE 절에 그냥 WHERE ANNSAL > 30000 안되고 식을 싹다 써야함... 
+  
+  
+  
+  SELECT ENAME || ''|| SAL AS ENAMEANDJOB FROM EMP;  
+  SELECT DISTINCT(JOB) FROM EMP;		-- 컬럼 종류 중복 걸러내기
+  
+  SELECT * FROM EMP WHERE JOB = 'SALESMAN' -- SALESMANS만 찾기
+  SELECT * FROM EMP WHERE JOB = 'SALESMAN' AND SAL > 1000;  -- 조건 여러개도 가능.
+  SELECT * FROM EMP WHERE JOB = 'MANAGER' AND SAL >1000 AND HIREDATE > '02/20/1981';
+  
+  SELECT ENAME,SAL FROM EMP WHERE SAL BETWEEN 2000 AND 3000 -- 양 끝단의 값을 포함하기 때문에 주의 ! 
+  
+  
+  /*
+  중간에 들어간 글자 찾기
+  */
+  SELECT * FROM EMP WHERE ENAME LIKE '%C%'; -- 중간에 c
+  SELECT * FROM EMP WHERE ENAME LIKE '%C';	-- C로 끝남
+  SELECT * FROM EMP WHERE ENAME LIKE 'C%';	-- C로 시작
+  SELECT * FROM EMP WHERE  ENAME NOT LIKE '%F%' ; -- F 안드가는거.
+  
+  SELECT * FROM EMP WHERE ENAME LIKE '_C_'; -- 중간에 c,3글자
+  SELECT * FROM EMP WHERE ENAME LIKE 'C_'; --C로 시작 2글자
+  SELECT * FROM EMP WHERE ENAME LIKE '_C'; --C로 끝남 2글자
+  
+  SELECT * FROM EMP WHERE COMM IS NULL ; -- NULL 값 조회는 비교연산자 = 를 사용하지 못한다. IS NULL  / IS NOT NULL
+  SELECT * FROM EMP WHERE NOT (SAL >= 2000)  ; --이런것도 가능..
+  SELECT * FROM EMP WHERE  SAL < 2000 AND DEPTNO = 30 OR ENAME LIKE '%F%' ; -- AND OR 연산은 앞에서부터 순서대로 진행
+  
+  -- 정렬
+  SELECT ENAME,SAL FROM EMP ORDER BY SAL			--기본 오름차순 ASC
+  SELECT ENAME,SAL FROM EMP ORDER BY SAL DESC;	-- DESC 내림차순
+  SELECT ENAME,SAL FROM EMP WHERE SAL >1000 AND DEPTNO =20 ORDER BY 2;  -- 2번 = SAL 이므로 같은 값,, 1이면 ENAME 이므로 앞파벳 순으로 정렬
+  SELECT ENAME,SAL, SAL*12 AS ANN_SAL FROM EMP WHERE SAL >1000 AND DEPTNO =20 ORDER BY ANN_SAL;  -- 컬럼명으로 비교는 안됐지만 정렬은 가능 !
+  
+  SELECT * FROM EMP WHERE MGR IS NOT NULL ORDER BY MGR,ENAME; -- 여러개 정렬 가능. 
+  SELECT * FROM EMP WHERE COMM IS NOT NULL ORDER BY COMM DESC -- NULL값 빼고정렬
+  ```
+  
+  그룹별 검색
+  
+  ```sql
+  SELECT [ALL}DISTINCT] 속성_리스트
+  FROM 테이블_리스트
+  [WHERE 조건]
+  [GROUP BY 속성_리스트 [HAVING조건]]
+  [ORDER BY 속성_리스트 [ASC|DESC]]
+  
+  ```
+  
+  
 
 - #### INSERT(Create)
 
