@@ -1,5 +1,31 @@
 # Spring IoC
 
+`Inversion of Control` 제어의 역행. 
+
+- IoC는 객체지향 언어에서 객체 간의 연결 관계를 런타임에 결정하게 하는 방법
+- 객체 간의 관계가 **느슨하게** 연결됨 
+  - 확장성증가 유지보수의 유용성.
+- IoC의 구현 방법 중 하나가 **DI**(Dependency Injection)
+  - `IoC`는 개념이고, 구현은 `DI`를 통해서 한다.
+
+## XML
+
+스프링프레임 워크는 Bean 컨테이너다 (빈 생성, 소멸, 관리)
+
+XML의 태그명은 데이터에 대한 서술, 설명
+
+```xml
+<!-- 스프링프레임 워크는 Bean 컨테이너다 (빈 생성, 소멸, 관리) -->
+<!-- XML의 태그명은 데이터에 대한 서술, 설명-->
+
+<!-- 등록할 Bean을 정의 -->
+<!-- 주의) 추상 클래스나 인터페이스는 등록불가 -->
+<bean class="com.ssafy.step3.MessageBeanKO" id="msg"></bean>
+<!-- MessageBeanKo msg = new MessageBeanKo() -->
+```
+
+
+
 
 
 ## Annotation
