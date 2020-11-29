@@ -3,6 +3,8 @@
 - Python
   - Python 설치
   - 개발자 도구
+  -  브라우저 랜더링 과정
+  -  graphql
   
 - Python02
   - Python Dictionary
@@ -11,6 +13,8 @@
   
 - Python03
   - Parameter
+    - query string
+    - path parameter
   - Beautiful Soup
   - render_template
   
@@ -20,6 +24,7 @@
     - 구조
   - REST API
     - REST API 디자인 가이드
+  - MVC 패턴 동작과정
   - workshop2
     - 검색창
     - 로그인
@@ -28,7 +33,7 @@
   - Django 연습 
   - 로또번호 생성기 + 번호체크 + 번호
   - ASCII
-  - OPGG
+  - OP.GG
   
 - Python06
   - 카카오 API 활용
@@ -97,10 +102,13 @@
 - Python19
 
   - Bootstrap 4 
+  - 유효성 검사 
 
 - Python20
 
   - Django Authentication
+
+    `django.contrib.auth`
 
 - Python21
 
